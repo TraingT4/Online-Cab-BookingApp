@@ -42,7 +42,7 @@ public class DriverController {
 	
 	//delete driver using driver id
 	@DeleteMapping("/delete/{driver_id}")
-	public ResponseEntity<String> deleteDriver(@PathVariable("customer_id") Integer driverId){
+	public ResponseEntity<String> deleteDriver(@PathVariable("driver_id") Integer driverId){
 		driverService.deleteDriver(driverId);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
 		return response;
@@ -56,7 +56,7 @@ public class DriverController {
 		return response;
 	}
 	
-	//get customer using customer id
+	//get driver using driver id
 	@GetMapping("/drivers/{driver_id}")
 	public ResponseEntity<Driver> getDriver(@PathVariable("driver_id") int driverId) {
 		Driver driver = driverService.viewDriver(driverId);

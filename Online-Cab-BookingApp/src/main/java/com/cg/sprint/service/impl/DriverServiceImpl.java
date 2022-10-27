@@ -15,14 +15,14 @@ public class DriverServiceImpl implements DriverService {
 	DriverRepository driverRepository;
 	
 	
-	//insert Driver method
+	//insert driver method
 	@Override
 	public Driver insertDriver(Driver driver) {
 		driverRepository.save(driver);
 		return driver;
 	}
 
-	//update Driver method
+	//update driver method
 	@Override
 	public Driver updateDriver(Driver driver) {
 		Optional<Driver> driverOpt = driverRepository.findById(driver.getDriverId());
@@ -37,13 +37,13 @@ public class DriverServiceImpl implements DriverService {
 		return driver1;
 	}
 
-	//delete Driver using Driver id method
+	//delete driver using driver id method
 	@Override
 	public void deleteDriver(int driverId) {
 		driverRepository.deleteById(driverId);
 	}
 
-	//view best Drivers method
+	//view best drivers method
 	@Override
 	public List<Driver> viewBestDrivers() {
 		List<Driver> drivers=driverRepository.findAll();	
@@ -58,7 +58,7 @@ public class DriverServiceImpl implements DriverService {
 		return BestDrivers;
 	}
 
-	//view Driver using Driver id method
+	//view driver using driver id method
 	@Override
 	public Driver viewDriver(int driverId) {
 		Optional<Driver> driver = driverRepository.findById(driverId);

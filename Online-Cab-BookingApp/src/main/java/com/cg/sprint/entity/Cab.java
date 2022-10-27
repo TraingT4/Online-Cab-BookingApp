@@ -2,6 +2,8 @@ package com.cg.sprint.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Cab {
@@ -10,6 +12,9 @@ public class Cab {
 	private int cabId;
 	private String carType;
 	private float perKmRate;
+	@OneToOne
+	@Transient
+	private Driver driver;
 	
 	public int getCabId() {
 		return cabId;

@@ -3,6 +3,7 @@ package com.cg.sprint.service.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.cg.sprint.entity.Admin;
 import com.cg.sprint.entity.TripBooking;
 import com.cg.sprint.repository.AdminRepository;
+import com.cg.sprint.repository.TripBookingRepository;
 import com.cg.sprint.service.AdminService;
 
 @Service
@@ -17,6 +19,9 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	AdminRepository adminRepository;
+	
+	@Autowired
+	TripBookingRepository tripBookingRepository;
 
 	@Override
 	public Admin insertAdmin(Admin adm) {
@@ -26,21 +31,28 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Admin updateAdmin(Admin adm) {
-		
-		adminRepository.save(adm);
+		Optional<Admin> admOpt = adminRepository.findById(adm.getAdminId());
+		Admin adm1 = null;
+		adm1 = admOpt.get();
+		adm1.setAdminId(adm.getAdminId());
+		adm1.setUsername(adm.getUsername());
+		adm1.setPassword(adm.getPassword());
+		adm1.setAddress(adm.getAddress());
+		adm1.setMobileNumber(adm.getMobileNumber());
+		adm1.setEmail(adm.getEmail());
+		adminRepository.save(adm1);
 
-		return adm;
+		return adm1;
 	}
 
 	@Override
 	public void deleteAdmin(int adminId) {
-		Admin ad=adminRepository.getOne(adminId);
-		adminRepository.delete(ad);
+		adminRepository.deleteById(adminId);
 	}
 
 	@Override
 	public List<TripBooking> getAllTrips(int customerId) {
-		return null;
+		return tripBookingRepository.findAll();
 	}
 
 	@Override

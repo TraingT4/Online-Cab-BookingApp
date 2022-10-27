@@ -1,18 +1,22 @@
 package com.cg.sprint.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Driver extends User{
-	
 	@Id
 	private int driverId;
 	private String licenceNO;
 	@OneToOne
 	private Cab cab;
 	private float rating;
+	@OneToMany
+	private List<TripBooking> tripBooking;
 	public int getDriverId() {
 		return driverId;
 	}

@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cg.employeemgnt.entity.Employee;
-import com.cg.employeemgnt.exception.EmployeeNotFoundException;
 import com.cg.sprint.entity.Customer;
 import com.cg.sprint.repository.CustomerRepository;
 import com.cg.sprint.service.CustomerService;
@@ -15,13 +13,16 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	CustomerRepository customerRepository;
-
+	
+	
+	//insert customer method
 	@Override
 	public Customer insertCustomer(Customer cust) {
 		customerRepository.save(cust);
 		return cust;
 	}
 
+	//update customer method
 	@Override
 	public Customer updateCustomer(Customer cust) {
 		Optional<Customer> custOpt = customerRepository.findById(cust.getCustomerId());
@@ -37,22 +38,26 @@ public class CustomerServiceImpl implements CustomerService {
 		return cust1;
 	}
 
+	//delete customer using customer id method
 	@Override
 	public void deleteCustomer(int customerId) {
 		customerRepository.deleteById(customerId);
 	}
 
+	//view all customers method
 	@Override
 	public List<Customer> viewCustomers() {
 		return customerRepository.findAll();
 	}
 
+	//view customer using customer id method
 	@Override
 	public Customer viewCustomer(int customerId) {
 		Optional<Customer> customer = customerRepository.findById(customerId);
 		return customer.get();
 	}
 
+	//validate customer method
 	@Override
 	public Customer validateCustomer(String username, String password) {
 		return null;

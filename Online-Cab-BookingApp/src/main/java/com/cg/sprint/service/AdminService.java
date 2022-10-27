@@ -6,7 +6,7 @@ import java.util.List;
 import com.cg.sprint.entity.Admin;
 
 public interface AdminService {
-	Admin saveAdmin(Admin adm);
+	Admin insertAdmin(Admin adm);
 	Admin updateAdmin(Admin adm);
 	void deleteAdmin(int adminId);
 	List<TripBooking> getAllTrips(int customerId);

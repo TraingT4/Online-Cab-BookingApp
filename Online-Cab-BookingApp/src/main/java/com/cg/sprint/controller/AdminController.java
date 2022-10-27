@@ -18,28 +18,32 @@ import com.cg.sprint.entity.Admin;
 import com.cg.sprint.service.AdminService;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/admin")
 public class AdminController {
 	
 	@Autowired
 	AdminService adminService;
 	
+	
+	//inserting the admin
 	@PostMapping("/admin")
-	public ResponseEntity<Admin> saveEmployee(@RequestBody @Valid Admin adm){
-		Admin ad = adminService.saveAdmin(adm);
+	public ResponseEntity<Admin> insertAdmin(@RequestBody @Valid Admin adm){
+		Admin ad = adminService.insertAdmin(adm);
 		ResponseEntity<Admin> response = new ResponseEntity<Admin>(ad, HttpStatus.CREATED);
 		return response;
 	}
 	
+	//update the admin
 	@PutMapping("/admin/{admin_id}")
-	public ResponseEntity<Admin> updateEmployee(@RequestBody Admin admin){
+	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin){
 		Admin adm = adminService.updateAdmin(admin);
 		ResponseEntity<Admin> reponse = new ResponseEntity<Admin>(adm, HttpStatus.OK);
 		return reponse;
 	}
 	
+	//delete admin using admin id
 	@DeleteMapping("/admin/{admin_id}")
-	public ResponseEntity<String> deleteAdmn(@PathVariable("admin_id") Integer adminId){
+	public ResponseEntity<String> deleteAdmin(@PathVariable("admin_id") Integer adminId){
 		adminService.deleteAdmin(adminId);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
 		return response;

@@ -26,9 +26,9 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Admin updateAdmin(Admin adm) {
-		Optional<Admin> empOpt = adminRepository.findById(adm.getAdminId());
+		Optional<Admin> admOpt = adminRepository.findById(adm.getAdminId());
 		Admin adm1 = null;
-		adm1 = empOpt.get();
+		adm1 = admOpt.get();
 		adm1.setUsername(adm.getUsername());
 		adm1.setPassword(adm.getPassword());
 		adm1.setAddress(adm.getAddress());
@@ -41,11 +41,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void deleteAdmin(int adminId) {
-		Optional<Admin> empOpt = adminRepository.findById(adminId);
-		Admin emp = null;
-
 		adminRepository.deleteById(adminId);
-
 	}
 
 	@Override

@@ -20,7 +20,7 @@ import com.cg.sprint.entity.Customer;
 import com.cg.sprint.service.CustomerService;
 
 @RestController
-@RequestMapping("api/customer")
+@RequestMapping("api/customers")
 public class CustomerController {
 
 	@Autowired
@@ -28,7 +28,7 @@ public class CustomerController {
 	
 	
 	//inserting the customer
-	@PostMapping("/insert")
+	@PostMapping("/")
 	public ResponseEntity<Customer> insertCustomer(@RequestBody @Valid Customer customer){
 		Customer cus = customerService.insertCustomer(customer);
 		ResponseEntity<Customer> response = new ResponseEntity<Customer>(cus, HttpStatus.CREATED);
@@ -36,7 +36,7 @@ public class CustomerController {
 	}
 	
 	//update the customer
-	@PutMapping("/update")
+	@PutMapping("/")
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer){
 		Customer cus = customerService.updateCustomer(customer);
 		ResponseEntity<Customer> reponse = new ResponseEntity<Customer>(cus, HttpStatus.OK);
@@ -44,7 +44,7 @@ public class CustomerController {
 	}
 	
 	//delete customer using customer id
-	@DeleteMapping("/delete/{customer_id}")
+	@DeleteMapping("/{customer_id}")
 	public ResponseEntity<String> deleteCustomer(@PathVariable("customer_id") Integer customerId){
 		customerService.deleteCustomer(customerId);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
@@ -52,7 +52,7 @@ public class CustomerController {
 	}
 	
 	//get all customers
-	@GetMapping("/customers")
+	@GetMapping("/")
 	public ResponseEntity<List<Customer>> getallCustomers() {
 		List<Customer> customers = customerService.viewCustomers();
 		ResponseEntity<List<Customer>> response = new ResponseEntity<>(customers, HttpStatus.OK);
@@ -60,7 +60,7 @@ public class CustomerController {
 	}
 	
 	//get customer using customer id
-	@GetMapping("/customers/{customer_id}")
+	@GetMapping("/{customer_id}")
 	public ResponseEntity<Customer> getCustomer(@PathVariable("customer_id") int customerId) {
 		Customer customer = customerService.viewCustomer(customerId);
 		ResponseEntity<Customer> response = new ResponseEntity<Customer>(customer, HttpStatus.OK);

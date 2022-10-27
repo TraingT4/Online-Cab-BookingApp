@@ -1,6 +1,11 @@
 package com.cg.sprint.entity;
-public class Customer extends User{
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Customer extends User{
+	@Id
 	private int customerId;
 
 	public int getCustomerId() {

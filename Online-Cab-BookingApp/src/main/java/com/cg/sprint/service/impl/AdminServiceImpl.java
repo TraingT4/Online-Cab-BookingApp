@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.sprint.entity.Admin;
+import com.cg.sprint.entity.TripBooking;
 import com.cg.sprint.repository.AdminRepository;
 import com.cg.sprint.service.AdminService;
-import com.cg.sprint.service.TripBooking;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -26,22 +26,16 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Admin updateAdmin(Admin adm) {
-		Optional<Admin> admOpt = adminRepository.findById(adm.getAdminId());
-		Admin adm1 = null;
-		adm1 = admOpt.get();
-		adm1.setUsername(adm.getUsername());
-		adm1.setPassword(adm.getPassword());
-		adm1.setAddress(adm.getAddress());
-		adm1.setMobileNumber(adm.getMobileNumber());
-		adm1.setEmail(adm.getEmail());
-		adminRepository.save(adm1);
+		
+		adminRepository.save(adm);
 
-		return adm1;
+		return adm;
 	}
 
 	@Override
 	public void deleteAdmin(int adminId) {
-		adminRepository.deleteById(adminId);
+		Admin ad=adminRepository.getOne(adminId);
+		adminRepository.delete(ad);
 	}
 
 	@Override

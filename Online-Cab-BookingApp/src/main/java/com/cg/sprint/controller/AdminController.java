@@ -26,7 +26,7 @@ public class AdminController {
 	
 	
 	//inserting the admin
-	@PostMapping("/admin")
+	@PostMapping("/")
 	public ResponseEntity<Admin> insertAdmin(@RequestBody @Valid Admin adm){
 		Admin ad = adminService.insertAdmin(adm);
 		ResponseEntity<Admin> response = new ResponseEntity<Admin>(ad, HttpStatus.CREATED);
@@ -34,7 +34,7 @@ public class AdminController {
 	}
 	
 	//update the admin
-	@PutMapping("/admin/{admin_id}")
+	@PutMapping("/{admin_id}")
 	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin){
 		Admin adm = adminService.updateAdmin(admin);
 		ResponseEntity<Admin> reponse = new ResponseEntity<Admin>(adm, HttpStatus.OK);
@@ -42,7 +42,7 @@ public class AdminController {
 	}
 	
 	//delete admin using admin id
-	@DeleteMapping("/admin/{admin_id}")
+	@DeleteMapping("/{admin_id}")
 	public ResponseEntity<String> deleteAdmin(@PathVariable("admin_id") Integer adminId){
 		adminService.deleteAdmin(adminId);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);

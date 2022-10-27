@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.cg.sprint.entity.Admin;
+import com.cg.sprint.entity.TripBooking;
 
 public interface AdminService {
 	Admin insertAdmin(Admin adm);

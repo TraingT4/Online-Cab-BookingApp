@@ -1,5 +1,8 @@
 package com.cg.sprint.controller;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,39 +18,89 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.sprint.entity.Admin;
+import com.cg.sprint.entity.Customer;
+import com.cg.sprint.entity.TripBooking;
 import com.cg.sprint.service.AdminService;
+import com.cg.sprint.service.TripBookingService;
 
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
-	
+
 	@Autowired
 	AdminService adminService;
-	
-	
-	//inserting the admin
+
+	@Autowired
+	TripBookingService tripBookingService;
+
+	// inserting the admin
 	@PostMapping("/")
-	public ResponseEntity<Admin> insertAdmin(@RequestBody @Valid Admin adm){
+	public ResponseEntity<Admin> insertAdmin(@RequestBody @Valid Admin adm) {
 		Admin ad = adminService.insertAdmin(adm);
 		ResponseEntity<Admin> response = new ResponseEntity<Admin>(ad, HttpStatus.CREATED);
 		return response;
 	}
-	
-	//update the admin
+
+	// update the admin
 	@PutMapping("/")
-	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin){
+	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin) {
 		Admin adm = adminService.updateAdmin(admin);
 		ResponseEntity<Admin> reponse = new ResponseEntity<Admin>(adm, HttpStatus.OK);
 		return reponse;
 	}
-	
-	//delete admin using admin id
+
+	// delete admin using admin id
 	@DeleteMapping("/{admin_id}")
-	public ResponseEntity<String> deleteAdmin(@PathVariable("admin_id") String adminId){
-		int aid= Integer.parseInt(adminId);
+	public ResponseEntity<String> deleteAdmin(@PathVariable("admin_id") String adminId) {
+		int aid = Integer.parseInt(adminId);
 		adminService.deleteAdmin(aid);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
 		return response;
-		
+	}
+
+	// get all trips method
+	@GetMapping("/trips")
+	public ResponseEntity<List<TripBooking>> getallTrips() {
+		List<TripBooking> trips = adminService.getAllTrips();
+		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
+		return response;
+	}
+
+	// get all trips method
+	@GetMapping("/trips/customers/{customer_id}")
+	public ResponseEntity<List<TripBooking>> getTripsCustomerwise(@PathVariable("customer_id") String customerId) {
+		int cid = Integer.parseInt(customerId);
+		List<TripBooking> trips = adminService.getTripsCustomerwise(cid);
+		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
+		return response;
+	}
+
+	// get trips using cab id method
+	@GetMapping("/trips/cab/{cab_id}")
+	public ResponseEntity<List<TripBooking>> getTripsCabwise(@PathVariable("cab_id") String cabId) {
+		int cid = Integer.parseInt(cabId);
+		List<TripBooking> trips = adminService.getTripsCabwise(cid);
+		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
+		return response;
+	}
+	
+	//get trips for a date
+	@GetMapping("/trips/{date}")
+	public ResponseEntity<List<TripBooking>> getTripsDatewise(@PathVariable("date") String date) {
+		LocalDateTime dt=LocalDateTime.parse(date);
+		List<TripBooking> trips = adminService.getTripsDatewise(dt);
+		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
+		return response;
+	}
+	
+	//get all trips using customer id, from date and to date
+	@GetMapping("/trips/customers/{customer_id}/{from_date}/{to_date}")
+	public ResponseEntity<List<TripBooking>> getAllTripsForDays(@PathVariable("customer_id") String customerId,@PathVariable("from_date") String fromDate,@PathVariable("to_date") String toDate) {
+		int cid = Integer.parseInt(customerId);
+		LocalDateTime fdt=LocalDateTime.parse(fromDate);
+		LocalDateTime tdt=LocalDateTime.parse(toDate);
+		List<TripBooking> trips = adminService.getAllTripsForDays(cid, fdt, tdt);
+		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
+		return response;
 	}
 }

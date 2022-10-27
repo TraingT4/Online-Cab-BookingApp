@@ -22,13 +22,15 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	TripBookingRepository tripBookingRepository;
-
+	
+	//insert admin method
 	@Override
 	public Admin insertAdmin(Admin adm) {
 		adminRepository.save(adm);
 		return adm;
 	}
 
+	//update admin method
 	@Override
 	public Admin updateAdmin(Admin adm) {
 		Optional<Admin> admOpt = adminRepository.findById(adm.getAdminId());
@@ -44,35 +46,42 @@ public class AdminServiceImpl implements AdminService {
 
 		return adm1;
 	}
-
+	
+	
+	//delete admin method
 	@Override
 	public void deleteAdmin(int adminId) {
 		adminRepository.deleteById(adminId);
 	}
-
+	
+	//get all trips method
 	@Override
-	public List<TripBooking> getAllTrips(int customerId) {
+	public List<TripBooking> getAllTrips() {
 		return tripBookingRepository.findAll();
 	}
 
+	//get trips using cab id
 	@Override
-	public List<TripBooking> getTripsCabwise() {
-		return null;
+	public List<TripBooking> getTripsCabwise(int cabId) {
+		return tripBookingRepository.findAll().stream().filter(t->t.getDriver().getCab().getCabId()==cabId).toList();
 	}
 
+	//get trips using customer id
 	@Override
-	public List<TripBooking> getTripsCustomerwise() {
-		return null;
+	public List<TripBooking> getTripsCustomerwise(int customerId) {
+		return tripBookingRepository.findAll().stream().filter(t->t.getCustomer().getCustomerId()==customerId).toList();
 	}
 
+	//get trips using date
 	@Override
-	public List<TripBooking> getTripsDatewise() {
-		return null;
+	public List<TripBooking> getTripsDatewise(LocalDateTime date) {
+		return tripBookingRepository.findAll().stream().filter(t->t.getFromDateTime().equals(date)).toList();
 	}
 
+	//get trips using customer id and between date
 	@Override
 	public List<TripBooking> getAllTripsForDays(int customerId, LocalDateTime fromDate, LocalDateTime toDate) {
-		return null;
+		return tripBookingRepository.findAll().stream().filter(t->t.getCustomer().getCustomerId()==customerId && (t.getFromDateTime().isAfter(fromDate)&&t.getFromDateTime().isBefore(toDate))).toList();
 	}
 
 }

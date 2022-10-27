@@ -2,9 +2,12 @@ package com.cg.sprint.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.cg.sprint.entity.TripBooking;
 import com.cg.sprint.service.TripBookingService;
 
+@Service
 public class TripBookingServiceImpl implements TripBookingService {
 
 	@Override

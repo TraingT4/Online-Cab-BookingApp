@@ -10,9 +10,9 @@ public interface AdminService {
 	Admin insertAdmin(Admin adm);
 	Admin updateAdmin(Admin adm);
 	void deleteAdmin(int adminId);
-	List<TripBooking> getAllTrips(int customerId);
-	List<TripBooking> getTripsCabwise();
-	List<TripBooking> getTripsCustomerwise();
-	List<TripBooking> getTripsDatewise();
+	List<TripBooking> getAllTrips();
+	List<TripBooking> getTripsCabwise(int cabId);
+	List<TripBooking> getTripsCustomerwise(int customerId);
+	List<TripBooking> getTripsDatewise(LocalDateTime date);
 	List<TripBooking> getAllTripsForDays(int customerId, LocalDateTime fromDate,LocalDateTime toDate);
 }

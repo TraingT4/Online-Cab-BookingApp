@@ -10,5 +10,5 @@ public interface CustomerService {
 	void deleteCustomer(int customerId);
 	List<Customer> viewCustomers();
 	Customer viewCustomer(int customerId);
-	Customer validateCustomer(String username, String password);
+	boolean validateCustomer(Customer cust);
 }

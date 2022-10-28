@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.cg.sprint.entity.Admin;
@@ -82,6 +83,19 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<TripBooking> getAllTripsForDays(int customerId, LocalDateTime fromDate, LocalDateTime toDate) {
 		return tripBookingRepository.findAll().stream().filter(t->t.getCustomer().getCustomerId()==customerId && (t.getFromDateTime().isAfter(fromDate)&&t.getFromDateTime().isBefore(toDate))).toList();
+	}
+
+	@Override
+	public boolean validateAdmin(Admin admin) {
+		Admin adminid = adminRepository.findUserByadminId(admin.getAdminId());
+		
+        if(adminid.getAdminId()==admin.getAdminId()&&adminid.getPassword().equals(admin.getPassword())) {
+        	
+              return true;
+        }
+        return false;
+
+   
 	}
 
 }

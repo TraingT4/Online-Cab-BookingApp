@@ -10,6 +10,7 @@ public interface AdminService {
 	Admin insertAdmin(Admin adm);
 	Admin updateAdmin(Admin adm);
 	void deleteAdmin(int adminId);
+    boolean validateAdmin(Admin adm);
 	List<TripBooking> getAllTrips();
 	List<TripBooking> getTripsCabwise(int cabId);
 	List<TripBooking> getTripsCustomerwise(int customerId);

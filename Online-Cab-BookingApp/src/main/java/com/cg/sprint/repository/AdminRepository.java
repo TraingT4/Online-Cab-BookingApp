@@ -7,4 +7,8 @@ import com.cg.sprint.entity.Admin;
 
 public interface AdminRepository extends JpaRepository<Admin, Integer>{
 
+	  Admin findUserByadminId(int i);
+
+	
+
 }

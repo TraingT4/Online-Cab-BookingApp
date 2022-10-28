@@ -7,4 +7,8 @@ import com.cg.sprint.entity.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer>{
 
+	Customer findUserByCustomerId(int customerId);
+
+	//Customer findUserByUsername(String username);
+
 }

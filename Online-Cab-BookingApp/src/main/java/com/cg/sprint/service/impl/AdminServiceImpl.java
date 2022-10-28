@@ -23,6 +23,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	TripBookingRepository tripBookingRepository;
+	@Autowired
+	Admin admin;
 
 	// insert admin method
 	@Override
@@ -88,11 +90,11 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public boolean validateAdmin(Admin admin) {
-		Admin adminid = adminRepository.findUserByadminId(admin.getAdminId());
+	public boolean validateAdmin(int adminid,String password) {
+		Admin adminid1 = adminRepository.findUserByadminId(adminid);
 
 		try {
-			if (adminid.getAdminId() == admin.getAdminId() && adminid.getPassword().equals(admin.getPassword())) {
+			if (adminid1.getAdminId() == adminid && adminid1.getPassword().equals(password)) {
 
 				return true;
 				

@@ -24,7 +24,7 @@ import com.cg.sprint.service.AdminService;
 import com.cg.sprint.service.TripBookingService;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/admins")
 public class AdminController {
 
 	@Autowired

@@ -94,7 +94,7 @@ public class AdminServiceImpl implements AdminService {
 		Admin adminid1 = adminRepository.findUserByadminId(adminid);
 
 		try {
-			if (adminid1.getAdminId() == adminid && adminid1.getPassword().equals(password)) {
+			if ( adminid1.getPassword().equals(password)) {
 
 				return true;
 				

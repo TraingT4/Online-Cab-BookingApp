@@ -53,12 +53,12 @@ public class CustomerServiceImpl implements CustomerService {
 
 	// validate customer method
 	@Override
-	public boolean validateCustomer(Customer cust) {
+	public boolean validateCustomer(int customerId,String password) {
 
-		Customer custId = customerRepository.findUserByCustomerId(cust.getCustomerId());
+		Customer custId = customerRepository.findUserByCustomerId(customerId);
 
 		try {
-			if (custId.getCustomerId() == cust.getCustomerId() && custId.getPassword().equals(cust.getPassword())) {
+			if ( custId.getPassword().equals(password)) {
 
 				return true;
 				

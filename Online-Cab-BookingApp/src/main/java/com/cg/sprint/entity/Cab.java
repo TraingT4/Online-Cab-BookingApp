@@ -7,13 +7,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 @Entity
 public class Cab {
 	
 	@Id
 	private Long cabId;
+	@NotBlank(message="car type must not be empty")
 	private String carType;
+	@Positive(message="Rate per Km must be positive")
 	private Float perKmRate;
 	@OneToOne
 	private Driver driver;

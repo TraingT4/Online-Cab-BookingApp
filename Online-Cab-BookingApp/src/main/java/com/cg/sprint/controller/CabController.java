@@ -20,35 +20,35 @@ import com.cg.sprint.entity.Cab;
 import com.cg.sprint.service.CabService;
 
 @RestController
-@RequestMapping("api/cab")
+@RequestMapping("api/cabs")
 public class CabController {
 
 	@Autowired
 	CabService cabService;
 	
 	
-	@PostMapping("/insert")
+	@PostMapping("/")
 	public ResponseEntity<Cab> insertCab(@RequestBody @Valid Cab cab){
 		Cab cab1 = cabService.insertCab(cab);
 		ResponseEntity<Cab> response = new ResponseEntity<Cab>(cab1, HttpStatus.CREATED);
 		return response;
 	}
 	
-	@PutMapping("/update")
+	@PutMapping("/")
 	public ResponseEntity<Cab> updateCab(@RequestBody Cab cab){
 		Cab cab1 = cabService.updateCab(cab);
 		ResponseEntity<Cab> reponse = new ResponseEntity<Cab>(cab1, HttpStatus.OK);
 		return reponse;
 	}
 	
-	@DeleteMapping("/delete/{cabId}")
+	@DeleteMapping("/{cabId}")
 	public ResponseEntity<String> deleteCab(@PathVariable("cabId") Long cabId){
 		cabService.deleteCab(cabId);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
 		return response;
 	}
 	
-	@GetMapping("/carType/{cabType}")
+	@GetMapping("/{cabType}")
 	public ResponseEntity<List<Cab>> getCabTypes(@PathVariable("cabType") String carType) {
 		List<Cab> cabs = cabService.viewCabsOfType(carType);
 		ResponseEntity<List<Cab>> response = new ResponseEntity<>(cabs, HttpStatus.OK);

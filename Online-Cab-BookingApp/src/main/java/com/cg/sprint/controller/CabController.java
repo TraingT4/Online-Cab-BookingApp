@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.sprint.entity.Cab;
+import com.cg.sprint.exception.CabNotFoundException;
+import com.cg.sprint.exception.InvalidCarTypeException;
 import com.cg.sprint.service.CabService;
 
 @RestController
@@ -42,14 +44,14 @@ public class CabController {
 	}
 	
 	@DeleteMapping("/{cabId}")
-	public ResponseEntity<String> deleteCab(@PathVariable("cabId") Long cabId){
+	public ResponseEntity<String> deleteCab(@PathVariable("cabId") Long cabId) throws CabNotFoundException{
 		cabService.deleteCab(cabId);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
 		return response;
 	}
 	
 	@GetMapping("/{cabType}")
-	public ResponseEntity<List<Cab>> getCabTypes(@PathVariable("cabType") String carType) {
+	public ResponseEntity<List<Cab>> getCabTypes(@PathVariable("cabType") String carType) throws InvalidCarTypeException {
 		List<Cab> cabs = cabService.viewCabsOfType(carType);
 		ResponseEntity<List<Cab>> response = new ResponseEntity<>(cabs, HttpStatus.OK);
 		return response;

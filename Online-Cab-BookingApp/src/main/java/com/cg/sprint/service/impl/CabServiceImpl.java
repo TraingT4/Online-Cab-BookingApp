@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.sprint.entity.Cab;
+import com.cg.sprint.exception.CabNotFoundException;
+import com.cg.sprint.exception.InvalidCarTypeException;
 import com.cg.sprint.repository.CabRepository;
 import com.cg.sprint.service.CabService;
 
@@ -18,7 +20,7 @@ public class CabServiceImpl implements CabService{
 	CabRepository cabRepository;
 	@Override
 	public Cab insertCab(Cab cab) {
-		cabRepository.save(cab);
+		cabRepository.saveAndFlush(cab);
 		return cab;
 	}
 
@@ -34,38 +36,55 @@ public class CabServiceImpl implements CabService{
 	}
 
 	@Override
-	public Cab deleteCab(Long cabId) {
+	public Cab deleteCab(Long cabId) throws CabNotFoundException {
+		try {
 		cabRepository.deleteById(cabId);
+		}
+		catch(Exception ex)
+		{
+			throw new CabNotFoundException("Cab details Not Found.");
+		}
+		
 		Optional<Cab> cabOpt=cabRepository.findById(cabId);
 		Cab cab=cabOpt.get();
 		return cab;
 	}
 
 	@Override
-	public List<Cab> viewCabsOfType(String carType) {
-	 List<Cab> cab =cabRepository.findAll();
+	public List<Cab> viewCabsOfType(String carType) throws InvalidCarTypeException {
 		List<Cab>cab1=new ArrayList<>();
+		try {
+		List<Cab> cab =cabRepository.findAll();
 		for(Cab cabop:cab)
 		{
 			if(cabop.getCarType().contentEquals(carType))
 			{
 				cab1.add(cabop);
 			}
-		}
+		}}
+	    catch(Exception ex)
+	    {
+	    	throw new InvalidCarTypeException("Invalid car type.");
+	    }
 		return cab1;
 	}
 
 	@Override
-	public Long countCabsOfType(String carType) {
-		List<Cab> cab =cabRepository.findAll();
+	public Long countCabsOfType(String carType) throws InvalidCarTypeException{
 		Long count=0L;
+		try {
+		List<Cab> cab =cabRepository.findAll();
 		for(Cab cabop:cab)
 		{
 			if( cabop.getCarType().contentEquals(carType))
 			{
 				count++;
 			}
-		}
+		}}
+		catch(Exception ex)
+	    {
+	    	throw new InvalidCarTypeException("Invalid car type.");
+	    }
 		return count;
 	}
 

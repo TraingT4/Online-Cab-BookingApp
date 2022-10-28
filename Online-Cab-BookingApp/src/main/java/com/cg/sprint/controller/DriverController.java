@@ -16,21 +16,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.sprint.entity.Driver;
 //import com.cg.sprint.service.CustomerService;
 import com.cg.sprint.service.DriverService;
-
-@RestController
-@RequestMapping("/driver")
+@Controller
+@RequestMapping("/drivers")
 public class DriverController {
 	@Autowired
 	DriverService driverService;
 	
 	
 	//inserting the driver
-	@PostMapping("/insert")
+	@PostMapping("/")
 	public ResponseEntity<Driver> insertDriver(@RequestBody @Valid Driver driver){
 		Driver d = driverService.insertDriver(driver);
 		ResponseEntity<Driver> response = new ResponseEntity<Driver>(d, HttpStatus.CREATED);
@@ -38,7 +36,7 @@ public class DriverController {
 	}
 	
 	//update the driver
-	@PutMapping("/update")
+	@PutMapping("/")
 	public ResponseEntity<Driver> updateDriver(@RequestBody Driver driver){
 		Driver d = driverService.updateDriver(driver);
 		ResponseEntity<Driver> reponse = new ResponseEntity<Driver>(d, HttpStatus.OK);
@@ -46,7 +44,7 @@ public class DriverController {
 	}
 	
 	//delete driver using driver id
-	@DeleteMapping("/delete/{driver_id}")
+	@DeleteMapping("/{driver_id}")
 	public ResponseEntity<String> deleteDriver(@PathVariable("driver_id") Long driverId){
 		driverService.deleteDriver(driverId);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
@@ -54,7 +52,7 @@ public class DriverController {
 	}
 	
 	//get best drivers
-	@GetMapping("/bestdrivers")
+	@GetMapping("/")
 	public ResponseEntity<List<Driver>> getallDrivers() {
 		List<Driver> drivers = driverService.viewBestDrivers();
 		ResponseEntity<List<Driver>> response = new ResponseEntity<>(drivers, HttpStatus.OK);
@@ -62,7 +60,7 @@ public class DriverController {
 	}
 	
 	//get driver using driver id
-	@GetMapping("/drivers/{driver_id}")
+	@GetMapping("/{driver_id}")
 	public ResponseEntity<Driver> getDriver(@PathVariable("driver_id") Long driverId) {
 		Driver driver = driverService.viewDriver(driverId);
 		ResponseEntity<Driver> response = new ResponseEntity<Driver>(driver, HttpStatus.OK);

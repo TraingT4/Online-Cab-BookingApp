@@ -7,13 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Driver extends User{
 	@Id
 	@Column(name="driver_id")
 	private Long driverId;
+	@NotBlank(message="Licence Number must not be null")
 	private String licenceNO;
+	@NotNull(message="Rating must not be null")
 	private Float rating;
 	@OneToMany
 	private List<TripBooking> tripBooking;

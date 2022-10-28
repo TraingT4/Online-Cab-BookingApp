@@ -90,7 +90,7 @@ public class AdminServiceImpl implements AdminService {
 	public List<TripBooking> getTripsCabwise(Long cabId) throws CabNotFoundException {
 		Optional<Cab> cabOpt = cabRepository.findById(cabId);
 		if (cabOpt.isPresent()) {
-			return tripBookingRepository.findTripByCabCabId(cabId);
+			return cabRepository.findTripByTripBooking(cabId);
 		} else {
 			throw new CabNotFoundException("No such cab found");
 		}

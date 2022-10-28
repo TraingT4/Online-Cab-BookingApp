@@ -55,13 +55,20 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public boolean validateCustomer(Customer cust) {
 
-		Customer custName = customerRepository.findUserByCustomerId(cust.getCustomerId());
+		Customer custId = customerRepository.findUserByCustomerId(cust.getCustomerId());
 
-		if (custName.getCustomerId()==cust.getCustomerId() && custName.getPassword().equals(cust.getPassword())) {
+		try {
+			if (custId.getCustomerId() == cust.getCustomerId() && custId.getPassword().equals(cust.getPassword())) {
 
-			return true;
+				return true;
+				
+
+			}else {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			return false;
 		}
-		return false;
 
 	}
 

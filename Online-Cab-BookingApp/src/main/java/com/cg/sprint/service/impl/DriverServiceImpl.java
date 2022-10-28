@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.sprint.entity.Driver;
 import com.cg.sprint.repository.DriverRepository;
 import com.cg.sprint.service.DriverService;
-
+@Service
 public class DriverServiceImpl implements DriverService {
 	@Autowired
 	DriverRepository driverRepository;

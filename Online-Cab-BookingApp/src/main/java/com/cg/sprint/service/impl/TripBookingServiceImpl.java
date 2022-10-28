@@ -56,8 +56,17 @@ public class TripBookingServiceImpl implements TripBookingService {
 
 	@Override
 	public TripBooking calculateBill(int customerId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<TripBooking> trip1 =tripBookingRepository.findAll();
+		TripBooking trip=new TripBooking();
+		for(TripBooking tripop:trip1)
+		{
+			if(tripop.getCustomer().getCustomerId()==customerId)
+			{
+				trip=tripop;
+			}
+		}
+		trip.setBill((trip.getDistanceInKm())*(trip.getDriver().getCab().getPerKmRate()));
+		return trip;
 	}
 
 }

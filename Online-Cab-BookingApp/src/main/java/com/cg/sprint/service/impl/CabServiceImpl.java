@@ -34,7 +34,7 @@ public class CabServiceImpl implements CabService{
 	}
 
 	@Override
-	public Cab deleteCab(int cabId) {
+	public Cab deleteCab(Long cabId) {
 		cabRepository.deleteById(cabId);
 		Optional<Cab> cabOpt=cabRepository.findById(cabId);
 		Cab cab=cabOpt.get();
@@ -56,9 +56,9 @@ public class CabServiceImpl implements CabService{
 	}
 
 	@Override
-	public int countCabsOfType(String carType) {
+	public Long countCabsOfType(String carType) {
 		List<Cab> cab =cabRepository.findAll();
-		Integer count=0;
+		Long count=0L;
 		for(Cab cabop:cab)
 		{
 			if( cabop.getCarType().contentEquals(carType))

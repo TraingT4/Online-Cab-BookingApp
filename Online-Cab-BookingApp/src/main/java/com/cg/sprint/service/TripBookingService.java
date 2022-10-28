@@ -8,7 +8,7 @@ public interface TripBookingService {
  
 	TripBooking insertTripBooking(TripBooking tripBooking);
 	TripBooking updateTripBooking(TripBooking tripBooking);
-	TripBooking deleteTripBooking(int tripBookingId);
-	List<TripBooking> viewAllTripCustomer(int customerId);
-	TripBooking calculateBill(int customerId);
+	TripBooking deleteTripBooking(Long tripBookingId);
+	List<TripBooking> viewAllTripCustomer(Long customerId);
+	TripBooking calculateBill(Long customerId);
 }

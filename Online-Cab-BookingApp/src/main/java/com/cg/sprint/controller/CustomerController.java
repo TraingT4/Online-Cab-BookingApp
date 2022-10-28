@@ -45,7 +45,7 @@ public class CustomerController {
 	
 	//delete customer using customer id
 	@DeleteMapping("/{customer_id}")
-	public ResponseEntity<String> deleteCustomer(@PathVariable("customer_id") Integer customerId){
+	public ResponseEntity<String> deleteCustomer(@PathVariable("customer_id") Long customerId){
 		customerService.deleteCustomer(customerId);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
 		return response;
@@ -61,7 +61,7 @@ public class CustomerController {
 	
 	//get customer using customer id
 	@GetMapping("/{customer_id}")
-	public ResponseEntity<Customer> getCustomer(@PathVariable("customer_id") int customerId) {
+	public ResponseEntity<Customer> getCustomer(@PathVariable("customer_id") Long customerId) {
 		Customer customer = customerService.viewCustomer(customerId);
 		ResponseEntity<Customer> response = new ResponseEntity<Customer>(customer, HttpStatus.OK);
 		return response;

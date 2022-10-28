@@ -30,7 +30,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 		tripBooking1=trpbkOpt.get();
 		tripBooking1.setTripBookingId(tripBooking.getTripBookingId());
 		tripBooking1.setCustomer(tripBooking.getCustomer());
-		tripBooking1.setDriver(tripBooking.getDriver());
+		tripBooking1.setCab(tripBooking.getCab());
 		tripBooking1.setFromLocation(tripBooking.getFromLocation());
 		tripBooking1.setToLocation(tripBooking.getToLocation());
 		tripBooking1.setFromDateTime(tripBooking.getFromDateTime());
@@ -43,19 +43,19 @@ public class TripBookingServiceImpl implements TripBookingService {
 	}
 
 	@Override
-	public TripBooking deleteTripBooking(int tripBookingId) {
+	public TripBooking deleteTripBooking(Long tripBookingId) {
 		tripBookingRepository.deleteById(tripBookingId);
 		return null;
 	}
 
 	@Override
-	public List<TripBooking> viewAllTripCustomer(int customerId) {
+	public List<TripBooking> viewAllTripCustomer(Long customerId) {
 		
 		return tripBookingRepository.findAll().stream().filter(t->t.getCustomer().getCustomerId()==customerId).toList();                       
 	}
 
 	@Override
-	public TripBooking calculateBill(int customerId) {
+	public TripBooking calculateBill(Long customerId) {
 		List<TripBooking> trip1 =tripBookingRepository.findAll();
 		TripBooking trip=new TripBooking();
 		for(TripBooking tripop:trip1)
@@ -65,7 +65,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 				trip=tripop;
 			}
 		}
-		trip.setBill((trip.getDistanceInKm())*(trip.getDriver().getCab().getPerKmRate()));
+		trip.setBill((trip.getDistanceInKm())*(trip.getCab().getPerKmRate()));
 		return trip;
 	}
 

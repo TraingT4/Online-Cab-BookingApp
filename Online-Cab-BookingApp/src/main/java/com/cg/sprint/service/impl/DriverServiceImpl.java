@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.sprint.entity.Driver;
 import com.cg.sprint.repository.DriverRepository;
 import com.cg.sprint.service.DriverService;
 
+@Service
 public class DriverServiceImpl implements DriverService {
 	@Autowired
 	DriverRepository driverRepository;
@@ -39,7 +41,7 @@ public class DriverServiceImpl implements DriverService {
 
 	//delete driver using driver id method
 	@Override
-	public void deleteDriver(int driverId) {
+	public void deleteDriver(Long driverId) {
 		driverRepository.deleteById(driverId);
 	}
 
@@ -60,7 +62,7 @@ public class DriverServiceImpl implements DriverService {
 
 	//view driver using driver id method
 	@Override
-	public Driver viewDriver(int driverId) {
+	public Driver viewDriver(Long driverId) {
 		Optional<Driver> driver = driverRepository.findById(driverId);
 		return driver.get();
 	}

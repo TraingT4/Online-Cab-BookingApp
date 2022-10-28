@@ -27,16 +27,24 @@ public class CustomerServiceImpl implements CustomerService {
 	// update customer method
 	@Override
 	public Customer updateCustomer(Customer cust) {
-		customerRepository.save(cust);
+		Optional<Customer> cusOpt = customerRepository.findById(cust.getCustomerId());
+		Customer cust1 = null;
+		cust1 = cusOpt.get();
+		cust1.setCustomerId(cust.getCustomerId());
+		cust1.setUsername(cust.getUsername());
+		cust1.setPassword(cust.getPassword());
+		cust1.setAddress(cust.getAddress());
+		cust1.setMobileNumber(cust.getMobileNumber());
+		cust1.setEmail(cust.getEmail());
+		customerRepository.save(cust1);
 
-		return cust;
+		return cust1;
 	}
 
 	// delete customer using customer id method
 	@Override
-	public void deleteCustomer(int customerId) {
-		Customer cu = customerRepository.getOne(customerId);
-		customerRepository.delete(cu);
+	public void deleteCustomer(Long customerId) {
+		customerRepository.deleteById(customerId);
 	}
 
 	// view all customers method
@@ -47,13 +55,13 @@ public class CustomerServiceImpl implements CustomerService {
 
 	// view customer using customer id method
 	@Override
-	public Customer viewCustomer(int customerId) {
-		return customerRepository.getOne(customerId);
+	public Customer viewCustomer(Long customerId) {
+		return customerRepository.findUserByCustomerId(customerId);
 	}
 
 	// validate customer method
 	@Override
-	public boolean validateCustomer(Customer cust) {
+	public Boolean validateCustomer(Customer cust) {
 
 		Customer custName = customerRepository.findUserByCustomerId(cust.getCustomerId());
 

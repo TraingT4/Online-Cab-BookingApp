@@ -14,11 +14,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.sprint.entity.Driver;
 //import com.cg.sprint.service.CustomerService;
 import com.cg.sprint.service.DriverService;
 
+@RestController
+@RequestMapping("/api/driver")
 public class DriverController {
 	@Autowired
 	DriverService driverService;
@@ -42,7 +46,7 @@ public class DriverController {
 	
 	//delete driver using driver id
 	@DeleteMapping("/delete/{driver_id}")
-	public ResponseEntity<String> deleteDriver(@PathVariable("driver_id") Integer driverId){
+	public ResponseEntity<String> deleteDriver(@PathVariable("driver_id") Long driverId){
 		driverService.deleteDriver(driverId);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
 		return response;
@@ -58,7 +62,7 @@ public class DriverController {
 	
 	//get driver using driver id
 	@GetMapping("/drivers/{driver_id}")
-	public ResponseEntity<Driver> getDriver(@PathVariable("driver_id") int driverId) {
+	public ResponseEntity<Driver> getDriver(@PathVariable("driver_id") Long driverId) {
 		Driver driver = driverService.viewDriver(driverId);
 		ResponseEntity<Driver> response = new ResponseEntity<Driver>(driver, HttpStatus.OK);
 		return response;

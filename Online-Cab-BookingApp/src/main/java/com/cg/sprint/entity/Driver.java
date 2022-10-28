@@ -2,6 +2,7 @@ package com.cg.sprint.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -10,17 +11,18 @@ import javax.persistence.OneToOne;
 @Entity
 public class Driver extends User{
 	@Id
-	private int driverId;
+	@Column(name="driver_id")
+	private Long driverId;
 	private String licenceNO;
-	@OneToOne
-	private Cab cab;
-	private float rating;
+	private Float rating;
 	@OneToMany
 	private List<TripBooking> tripBooking;
-	public int getDriverId() {
+	@OneToOne
+	private Cab cab;
+	public Long getDriverId() {
 		return driverId;
 	}
-	public void setDriverId(int driverId) {
+	public void setDriverId(Long driverId) {
 		this.driverId = driverId;
 	}
 	public String getLicenceNO() {
@@ -29,17 +31,34 @@ public class Driver extends User{
 	public void setLicenceNO(String licenceNO) {
 		this.licenceNO = licenceNO;
 	}
+	public Float getRating() {
+		return rating;
+	}
+	public void setRating(Float rating) {
+		this.rating = rating;
+	}
+	public List<TripBooking> getTripBooking() {
+		return tripBooking;
+	}
+	public void setTripBooking(List<TripBooking> tripBooking) {
+		this.tripBooking = tripBooking;
+	}
 	public Cab getCab() {
 		return cab;
 	}
 	public void setCab(Cab cab) {
 		this.cab = cab;
 	}
-	public float getRating() {
-		return rating;
-	}
-	public void setRating(float rating) {
+	public Driver(Long driverId, String licenceNO, Float rating, List<TripBooking> tripBooking, Cab cab) {
+		super();
+		this.driverId = driverId;
+		this.licenceNO = licenceNO;
 		this.rating = rating;
+		this.tripBooking = tripBooking;
+		this.cab = cab;
+	}
+	public Driver() {
+		super();
 	}
 	
 }

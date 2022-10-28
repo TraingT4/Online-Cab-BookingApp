@@ -42,7 +42,7 @@ public class CabController {
 	}
 	
 	@DeleteMapping("/delete/{cabId}")
-	public ResponseEntity<String> deleteCab(@PathVariable("cabId") Integer cabId){
+	public ResponseEntity<String> deleteCab(@PathVariable("cabId") Long cabId){
 		cabService.deleteCab(cabId);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
 		return response;

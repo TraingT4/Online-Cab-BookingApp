@@ -6,13 +6,13 @@ import javax.persistence.Id;
 @Entity
 public class Admin extends User{
 	@Id
-	private int adminId;
+	private Long adminId;
 
-	public int getAdminId() {
+	public Long getAdminId() {
 		return adminId;
 	}
 
-	public void setAdminId(int adminId) {
+	public void setAdminId(Long adminId) {
 		this.adminId = adminId;
 	}
 

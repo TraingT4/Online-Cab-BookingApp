@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cg.sprint.entity.Cab;
 
-public interface CabRepository extends JpaRepository<Cab, Integer>{
+public interface CabRepository extends JpaRepository<Cab, Long>{
 
 }

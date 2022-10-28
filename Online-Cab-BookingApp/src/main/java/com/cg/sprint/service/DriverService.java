@@ -9,7 +9,7 @@ public interface DriverService {
 
 	Driver insertDriver(Driver driver);
 	Driver updateDriver(Driver driver);
-	void deleteDriver(int driverId);
+	void deleteDriver(Long driverId);
 	List<Driver> viewBestDrivers();
-	Driver viewDriver(int driverId);
+	Driver viewDriver(Long driverId);
 }

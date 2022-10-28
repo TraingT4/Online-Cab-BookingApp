@@ -51,9 +51,8 @@ public class AdminController {
 
 	// delete admin using admin id
 	@DeleteMapping("/{admin_id}")
-	public ResponseEntity<String> deleteAdmin(@PathVariable("admin_id") String adminId) {
-		int aid = Integer.parseInt(adminId);
-		adminService.deleteAdmin(aid);
+	public ResponseEntity<String> deleteAdmin(@PathVariable("admin_id") Long adminId) {
+		adminService.deleteAdmin(adminId);
 		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
 		return response;
 	}
@@ -68,18 +67,16 @@ public class AdminController {
 
 	// get all trips method
 	@GetMapping("/trips/customers/{customer_id}")
-	public ResponseEntity<List<TripBooking>> getTripsCustomerwise(@PathVariable("customer_id") String customerId) {
-		int cid = Integer.parseInt(customerId);
-		List<TripBooking> trips = adminService.getTripsCustomerwise(cid);
+	public ResponseEntity<List<TripBooking>> getTripsCustomerwise(@PathVariable("customer_id") Long customerId) {
+		List<TripBooking> trips = adminService.getTripsCustomerwise(customerId);
 		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
 		return response;
 	}
 
 	// get trips using cab id method
 	@GetMapping("/trips/cab/{cab_id}")
-	public ResponseEntity<List<TripBooking>> getTripsCabwise(@PathVariable("cab_id") String cabId) {
-		int cid = Integer.parseInt(cabId);
-		List<TripBooking> trips = adminService.getTripsCabwise(cid);
+	public ResponseEntity<List<TripBooking>> getTripsCabwise(@PathVariable("cab_id") Long cabId) {
+		List<TripBooking> trips = adminService.getTripsCabwise(cabId);
 		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
 		return response;
 	}
@@ -95,11 +92,8 @@ public class AdminController {
 	
 	//get all trips using customer id, from date and to date
 	@GetMapping("/trips/customers/{customer_id}/{from_date}/{to_date}")
-	public ResponseEntity<List<TripBooking>> getAllTripsForDays(@PathVariable("customer_id") String customerId,@PathVariable("from_date") String fromDate,@PathVariable("to_date") String toDate) {
-		int cid = Integer.parseInt(customerId);
-		LocalDateTime fdt=LocalDateTime.parse(fromDate);
-		LocalDateTime tdt=LocalDateTime.parse(toDate);
-		List<TripBooking> trips = adminService.getAllTripsForDays(cid, fdt, tdt);
+	public ResponseEntity<List<TripBooking>> getAllTripsForDays(@PathVariable("customer_id") Long customerId,@PathVariable("from_date") LocalDateTime fromDate,@PathVariable("to_date") LocalDateTime toDate) {
+		List<TripBooking> trips = adminService.getAllTripsForDays(customerId, fromDate, toDate);
 		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
 		return response;
 	}

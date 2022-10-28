@@ -7,8 +7,8 @@ import com.cg.sprint.entity.Customer;
 public interface CustomerService {
 	Customer insertCustomer(Customer cust);
 	Customer updateCustomer(Customer cust);
-	void deleteCustomer(int customerId);
+	void deleteCustomer(Long customerId);
 	List<Customer> viewCustomers();
-	Customer viewCustomer(int customerId);
-	boolean validateCustomer(Customer cust);
+	Customer viewCustomer(Long customerId);
+	Boolean validateCustomer(Customer cust);
 }

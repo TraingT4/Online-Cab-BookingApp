@@ -1,7 +1,10 @@
 package com.cg.sprint.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -9,17 +12,32 @@ import javax.persistence.Transient;
 public class Cab {
 	
 	@Id
-	private int cabId;
+	private Long cabId;
 	private String carType;
-	private float perKmRate;
+	private Float perKmRate;
 	@OneToOne
-	@Transient
 	private Driver driver;
+	@OneToMany
+	private List<TripBooking> tripBooking;
 	
-	public int getCabId() {
+	
+	
+	public Driver getDriver() {
+		return driver;
+	}
+	public void setDriver(Driver driver) {
+		this.driver = driver;
+	}
+	public List<TripBooking> getTripBooking() {
+		return tripBooking;
+	}
+	public void setTripBooking(List<TripBooking> tripBooking) {
+		this.tripBooking = tripBooking;
+	}
+	public Long getCabId() {
 		return cabId;
 	}
-	public void setCabId(int cabId) {
+	public void setCabId(Long cabId) {
 		this.cabId = cabId;
 	}
 	public String getCarType() {
@@ -28,10 +46,10 @@ public class Cab {
 	public void setCarType(String carType) {
 		this.carType = carType;
 	}
-	public float getPerKmRate() {
+	public Float getPerKmRate() {
 		return perKmRate;
 	}
-	public void setPerKmRate(float perKmRate) {
+	public void setPerKmRate(Float perKmRate) {
 		this.perKmRate = perKmRate;
 	}
 

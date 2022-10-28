@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cg.sprint.entity.Driver;
 
-public interface DriverRepository extends JpaRepository<Driver, Integer>{
+public interface DriverRepository extends JpaRepository<Driver, Long>{
 }

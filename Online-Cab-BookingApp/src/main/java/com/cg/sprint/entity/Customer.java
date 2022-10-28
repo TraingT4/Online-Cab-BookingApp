@@ -1,18 +1,26 @@
 package com.cg.sprint.entity;
 
+
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
 
 @Entity
 public class Customer extends User{
 	@Id
-	private int customerId;
+	@Column(name="customer_id")
+	private Long customerId;
 
-	public int getCustomerId() {
+	public Long getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
 }

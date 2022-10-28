@@ -8,7 +8,7 @@ import com.cg.sprint.entity.Cab;
 public interface CabService {
 	Cab insertCab(Cab cab);
 	Cab updateCab(Cab cab);
-	Cab deleteCab(int cabId);
+	Cab deleteCab(Long cabId);
 	List<Cab> viewCabsOfType(String carType);
-	int countCabsOfType(String carType);
+	Long countCabsOfType(String carType);
 }

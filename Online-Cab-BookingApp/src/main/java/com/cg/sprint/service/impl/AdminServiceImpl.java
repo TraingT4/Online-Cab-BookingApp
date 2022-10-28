@@ -51,7 +51,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	//delete admin method
 	@Override
-	public void deleteAdmin(int adminId) {
+	public void deleteAdmin(Long adminId) {
 		adminRepository.deleteById(adminId);
 	}
 	
@@ -63,33 +63,33 @@ public class AdminServiceImpl implements AdminService {
 
 	//get trips using cab id
 	@Override
-	public List<TripBooking> getTripsCabwise(int cabId) {
-		return tripBookingRepository.findAll().stream().filter(t->t.getDriver().getCab().getCabId()==cabId).toList();
+	public List<TripBooking> getTripsCabwise(Long cabId) {
+		return tripBookingRepository.findTripByCabCabId(cabId);
 	}
 
 	//get trips using customer id
 	@Override
-	public List<TripBooking> getTripsCustomerwise(int customerId) {
-		return tripBookingRepository.findAll().stream().filter(t->t.getCustomer().getCustomerId()==customerId).toList();
+	public List<TripBooking> getTripsCustomerwise(Long customerId) {
+		return tripBookingRepository.findTripByCustomerCustomerId(customerId);
 	}
 
 	//get trips using date
 	@Override
 	public List<TripBooking> getTripsDatewise(LocalDateTime date) {
-		return tripBookingRepository.findAll().stream().filter(t->t.getFromDateTime().equals(date)).toList();
+		return tripBookingRepository.findAll().stream().filter(t->t.getFromDateTime().getDayOfYear()==date.getDayOfYear()).toList();
 	}
 
 	//get trips using customer id and between date
 	@Override
-	public List<TripBooking> getAllTripsForDays(int customerId, LocalDateTime fromDate, LocalDateTime toDate) {
-		return tripBookingRepository.findAll().stream().filter(t->t.getCustomer().getCustomerId()==customerId && (t.getFromDateTime().isAfter(fromDate)&&t.getFromDateTime().isBefore(toDate))).toList();
+	public List<TripBooking> getAllTripsForDays(Long customerId, LocalDateTime fromDate, LocalDateTime toDate) {
+		return tripBookingRepository.findAll().stream().filter(t->t.getCustomer().getCustomerId().equals(customerId) && (t.getFromDateTime().isAfter(fromDate)&&t.getFromDateTime().isBefore(toDate))).toList();
 	}
 
 	@Override
 	public boolean validateAdmin(Admin admin) {
 		Admin adminid = adminRepository.findUserByadminId(admin.getAdminId());
 		
-        if(adminid.getAdminId()==admin.getAdminId()&&adminid.getPassword().equals(admin.getPassword())) {
+        if(adminid.getAdminId().equals(adminid.getAdminId())&&adminid.getPassword().equals(admin.getPassword())) {
         	
               return true;
         }

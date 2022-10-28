@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import com.cg.sprint.entity.Driver;
 import com.cg.sprint.repository.DriverRepository;
 import com.cg.sprint.service.DriverService;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 76abbb80cfa605372b42da3bb927491eae3c5750
 @Service
 public class DriverServiceImpl implements DriverService {
 	@Autowired

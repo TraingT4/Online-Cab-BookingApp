@@ -1,10 +1,13 @@
 package com.cg.sprint.service;
 
 import java.util.List;
-import java.util.function.Supplier;
+
+import org.springframework.stereotype.Service;
 
 import com.cg.sprint.entity.Driver;
 
+
+@Service
 public interface DriverService {
 
 	Driver insertDriver(Driver driver);

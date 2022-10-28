@@ -5,7 +5,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +27,8 @@ public class LoginController {
 	AdminService admin1;
 
 	@PostMapping("/customer")
-	public ResponseEntity<String> loginCustomer(@RequestBody @Valid Customer cus) {
-		if (customerService.validateCustomer(cus)) {
+	public ResponseEntity<String> loginCustomer(@RequestBody Customer cust1) {
+		if (customerService.validateCustomer(cust1.getCustomerId(),cust1.getPassword())) {
 			ResponseEntity<String> response = new ResponseEntity<String>("Login Sucess",HttpStatus.ACCEPTED);
 			return response;
 		} else {
@@ -38,8 +39,8 @@ public class LoginController {
 	}
 
 	@PostMapping("/admin")
-	public ResponseEntity<String> loginAdmin(@RequestBody @Valid Admin admin) {
-		if (admin1.validateAdmin(admin)) {
+	public ResponseEntity<String> loginAdmin(@RequestBody Admin admin) {
+		if (admin1.validateAdmin(admin.getAdminId(),admin.getPassword())) {
 			ResponseEntity<String> response = new ResponseEntity<String>("Login Sucess",HttpStatus.ACCEPTED);
 		          return response;
 		

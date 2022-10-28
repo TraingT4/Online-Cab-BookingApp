@@ -55,21 +55,36 @@ public class CustomerServiceImpl implements CustomerService {
 
 	// view customer using customer id method
 	@Override
+<<<<<<< HEAD
 	public Customer viewCustomer(Long customerId) {
+=======
+	public Customer viewCustomer(int customerId) {
+>>>>>>> 76abbb80cfa605372b42da3bb927491eae3c5750
 		return customerRepository.findUserByCustomerId(customerId);
 	}
 
 	// validate customer method
 	@Override
+<<<<<<< HEAD
 	public Boolean validateCustomer(Customer cust) {
+=======
+	public boolean validateCustomer(int customerId,String password) {
+>>>>>>> 76abbb80cfa605372b42da3bb927491eae3c5750
 
-		Customer custName = customerRepository.findUserByCustomerId(cust.getCustomerId());
+		Customer custId = customerRepository.findUserByCustomerId(customerId);
 
-		if (custName.getCustomerId()==cust.getCustomerId() && custName.getPassword().equals(cust.getPassword())) {
+		try {
+			if ( custId.getPassword().equals(password)) {
 
-			return true;
+				return true;
+				
+
+			}else {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			return false;
 		}
-		return false;
 
 	}
 

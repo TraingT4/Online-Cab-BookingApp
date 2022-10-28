@@ -48,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
 	// view customer using customer id method
 	@Override
 	public Customer viewCustomer(int customerId) {
-		return customerRepository.getOne(customerId);
+		return customerRepository.findUserByCustomerId(customerId);
 	}
 
 	// validate customer method

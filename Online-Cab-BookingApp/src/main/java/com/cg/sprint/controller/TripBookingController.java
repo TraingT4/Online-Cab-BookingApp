@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.sprint.entity.Admin;
+
 import com.cg.sprint.entity.TripBooking;
 import com.cg.sprint.service.TripBookingService;
 
@@ -29,14 +29,14 @@ public class TripBookingController {
 	
 	
 	@PostMapping("/")
-	public ResponseEntity<TripBooking> insertAdmin(@RequestBody @Valid TripBooking trb) {
+	public ResponseEntity<TripBooking> insertTripBooking(@RequestBody @Valid TripBooking trb) {
 		TripBooking ad = tripBookingService.insertTripBooking(trb);
 		ResponseEntity<TripBooking> response = new ResponseEntity<TripBooking>(ad, HttpStatus.CREATED);
 		return response;
 	}
 	
 	@PutMapping("/")
-	public ResponseEntity<TripBooking> updateAdmin(@RequestBody TripBooking tripBooking) {
+	public ResponseEntity<TripBooking> updateTripBooking(@RequestBody TripBooking tripBooking) {
 		TripBooking tripBooking1 = tripBookingService.updateTripBooking(tripBooking);
 		ResponseEntity<TripBooking> reponse = new ResponseEntity<TripBooking>(tripBooking1, HttpStatus.OK);
 		return reponse;
@@ -44,7 +44,7 @@ public class TripBookingController {
 	
 	// delete admin using admin id
 		@DeleteMapping("/{tripBooking_id}")
-		public ResponseEntity<String> deleteAdmin(@PathVariable("tripBooking_id") String tripBookingId1) {
+		public ResponseEntity<String> deleteTripBooking(@PathVariable("tripBooking_id") String tripBookingId1) {
 			int tripBookingId = Integer.parseInt(tripBookingId1);
 			tripBookingService.deleteTripBooking(tripBookingId);
 			ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
@@ -52,10 +52,18 @@ public class TripBookingController {
 		}
 		
 		@GetMapping("/{customer_id}")
-		public ResponseEntity<List<TripBooking>> getTripsCustomerwise(@PathVariable("customer_id") String customerId) {
+		public ResponseEntity<List<TripBooking>> getTripBookingCustomerwise(@PathVariable("customer_id") String customerId) {
 			int cid = Integer.parseInt(customerId);
 			List<TripBooking> trips = tripBookingService.viewAllTripCustomer(cid);
 			ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
+			return response;
+		}
+		
+		@GetMapping("/bill/{customer_id}")
+		public ResponseEntity <TripBooking>getTripBillCustomerwise(@PathVariable("customer_id") String customerId) {
+			int cid = Integer.parseInt(customerId);
+			TripBooking trips = tripBookingService.calculateBill(cid);
+			ResponseEntity<TripBooking> response = new ResponseEntity<>(trips, HttpStatus.OK);
 			return response;
 		}
 

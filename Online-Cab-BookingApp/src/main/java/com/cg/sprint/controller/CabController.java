@@ -64,5 +64,11 @@ public class CabController {
 		return response;
 	}
 	
+	@GetMapping("/count/{cabType}")
+	public ResponseEntity<Long> getCountCabTypes(@PathVariable("cabType") String carType) throws InvalidCarTypeException {
+		Long cabs = cabService.countCabsOfType(carType);
+		ResponseEntity<Long> response = new ResponseEntity<>(cabs, HttpStatus.OK);
+		return response;
+	}
 	
 }

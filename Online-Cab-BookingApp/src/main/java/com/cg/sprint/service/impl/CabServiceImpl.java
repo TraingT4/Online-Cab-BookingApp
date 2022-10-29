@@ -54,7 +54,7 @@ public class CabServiceImpl implements CabService{
 		List<Cab> cab =cabRepository.findAll();
 		for(Cab cabop:cab)
 		{
-			if(cabop.getCarType().contentEquals(carType))
+			if(cabop.getCarType().equalsIgnoreCase(carType))
 			{
 				cab1.add(cabop);
 			}

@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.*;
 
@@ -21,6 +24,7 @@ public class TripBooking {
 
 	@Id
 	@Column(name ="trip_booking_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long tripBookingId;
 	
 	@ManyToOne(targetEntity = Customer.class)
@@ -35,16 +39,16 @@ public class TripBooking {
 	@JsonIdentityReference(alwaysAsId = true)
 	private Cab cab;
 	
-	@NotNull
+	@NotNull(message = "fromLocation should not be null")
 	private String fromLocation;
-	@NotNull
+	@NotNull(message = "fromLocation should not be  null")
 	private String toLocation;
-	@NotNull
+	@NotNull(message = "fromDateTime should not be null")
 	private LocalDateTime fromDateTime;
-	@NotNull
+	@NotNull(message = "toDateTime should not be null")
 	private LocalDateTime toDateTime;
 	private Boolean status;
-	@NotBlank
+	@Positive(message = "distance should be Positive")
 	private Float distanceInKm;
 	
 	private Float bill;

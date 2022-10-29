@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -18,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Cab {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long cabId;
 	@NotBlank(message="car type must not be empty")
 	private String carType;

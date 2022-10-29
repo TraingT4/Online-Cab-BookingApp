@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Driver extends User {
 	@Id
 	@Column(name = "driver_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long driverId;
 	@NotBlank(message = "Licence Number must not be null")
 	private String licenceNO;

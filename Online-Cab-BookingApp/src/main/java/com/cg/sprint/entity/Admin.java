@@ -1,6 +1,8 @@
 package com.cg.sprint.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import lombok.Setter;
 @Entity
 public class Admin extends User{
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long adminId;
 
 	

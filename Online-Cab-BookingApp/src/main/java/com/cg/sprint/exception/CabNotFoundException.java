@@ -1,14 +1,9 @@
 package com.cg.sprint.exception;
 
-public class CabNotFoundException extends RuntimeException{
-	private String message;
+public class CabNotFoundException extends Exception{
 
 	public CabNotFoundException(String message) {
-		super();
-		this.message = message;
+		super(message);
 	}
 
-	public CabNotFoundException() {
-		super();
-	}
 }

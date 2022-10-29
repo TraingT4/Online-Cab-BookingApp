@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.sprint.entity.Admin;
 import com.cg.sprint.entity.Customer;
 import com.cg.sprint.entity.TripBooking;
+import com.cg.sprint.exception.CabNotFoundException;
 import com.cg.sprint.service.AdminService;
 import com.cg.sprint.service.TripBookingService;
 
@@ -75,7 +76,7 @@ public class AdminController {
 
 	// get trips using cab id method
 	@GetMapping("/trips/cab/{cab_id}")
-	public ResponseEntity<List<TripBooking>> getTripsCabwise(@PathVariable("cab_id") Long cabId) {
+	public ResponseEntity<List<TripBooking>> getTripsCabwise(@PathVariable("cab_id") Long cabId) throws CabNotFoundException {
 		List<TripBooking> trips = adminService.getTripsCabwise(cabId);
 		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
 		return response;

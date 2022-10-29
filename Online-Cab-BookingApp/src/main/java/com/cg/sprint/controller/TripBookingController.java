@@ -31,7 +31,7 @@ import com.cg.sprint.service.TripBookingService;
 @RestController
 @RequestMapping("/api/tripbookings")
 public class TripBookingController {
-	
+
 	@Autowired
 	TripBookingService tripBookingService;
 	@Autowired
@@ -40,46 +40,44 @@ public class TripBookingController {
 	CabRepository cabRepository;
 	@Autowired
 	CustomerRepository customerRepository;
-	
-	
+
 	@PostMapping("/{cab_id}/{customer_id}")
-	public ResponseEntity<TripBooking> insertTripBooking(@RequestBody @Valid TripBooking trb,@PathVariable("cab_id") Long cabId,@PathVariable("customer_id") Long customerId) {
-		Optional<Cab> cab = cabRepository.findById(cabId);
-		Optional<Customer> customer = customerRepository.findById(customerId);
-		TripBooking ad = tripBookingService.insertTripBooking(trb);
-		ResponseEntity<TripBooking> response = new ResponseEntity<TripBooking>(ad, HttpStatus.CREATED);
+	public ResponseEntity<TripBooking> insertTripBooking(@RequestBody @Valid TripBooking trb,
+			@PathVariable("cab_id") Long cabId, @PathVariable("customer_id") Long customerId) {
+
+		TripBooking tb = tripBookingService.insertTripBooking(trb, cabId, customerId);
+		ResponseEntity<TripBooking> response = new ResponseEntity<TripBooking>(tb, HttpStatus.CREATED);
 		return response;
 	}
-	
+
 	@PutMapping("/{cab_id}/{customer_id}")
-	public ResponseEntity<TripBooking> updateTripBooking(@RequestBody TripBooking tripBooking,@PathVariable("cab_id") Long cabId,@PathVariable("customer_id") Long customerId) {
-		Optional<Cab> cab = cabRepository.findById(cabId);
-		Optional<Customer> customer = customerRepository.findById(customerId);
-		TripBooking tripBooking1 = tripBookingService.updateTripBooking(tripBooking);
+	public ResponseEntity<TripBooking> updateTripBooking(@RequestBody TripBooking tripBooking,
+			@PathVariable("cab_id") Long cabId, @PathVariable("customer_id") Long customerId) {
+		TripBooking tripBooking1 = tripBookingService.updateTripBooking(tripBooking, cabId, customerId);
 		ResponseEntity<TripBooking> reponse = new ResponseEntity<TripBooking>(tripBooking1, HttpStatus.OK);
 		return reponse;
 	}
-	
+
 	// delete admin using admin id
-		@DeleteMapping("/{tripBooking_id}")
-		public ResponseEntity<String> deleteTripBooking(@PathVariable("tripBooking_id") Long tripBookingId) {
-			tripBookingService.deleteTripBooking(tripBookingId);
-			ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
-			return response;
-		}
-		
-		@GetMapping("/{customer_id}")
-		public ResponseEntity<List<TripBooking>> getTripBookingCustomerwise(@PathVariable("customer_id") Long customerId) {
-			List<TripBooking> trips = tripBookingService.viewAllTripCustomer(customerId);
-			ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
-			return response;
-		}
-		
-		@GetMapping("/bill/{customer_id}")
-		public ResponseEntity <TripBooking>getTripBillCustomerwise(@PathVariable("customer_id") Long customerId) {
-			TripBooking trips = tripBookingService.calculateBill(customerId);
-			ResponseEntity<TripBooking> response = new ResponseEntity<>(trips, HttpStatus.OK);
-			return response;
-		}
+	@DeleteMapping("/{tripBooking_id}")
+	public ResponseEntity<String> deleteTripBooking(@PathVariable("tripBooking_id") Long tripBookingId) {
+		tripBookingService.deleteTripBooking(tripBookingId);
+		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
+		return response;
+	}
+
+	@GetMapping("/{customer_id}")
+	public ResponseEntity<List<TripBooking>> getTripBookingCustomerwise(@PathVariable("customer_id") Long customerId) {
+		List<TripBooking> trips = tripBookingService.viewAllTripCustomer(customerId);
+		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
+		return response;
+	}
+
+	@GetMapping("/bill/{customer_id}")
+	public ResponseEntity<TripBooking> getTripBillCustomerwise(@PathVariable("customer_id") Long customerId) {
+		TripBooking trips = tripBookingService.calculateBill(customerId);
+		ResponseEntity<TripBooking> response = new ResponseEntity<>(trips, HttpStatus.OK);
+		return response;
+	}
 
 }

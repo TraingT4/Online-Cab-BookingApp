@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.sprint.entity.Cab;
+import com.cg.sprint.entity.Driver;
 import com.cg.sprint.exception.CabNotFoundException;
 import com.cg.sprint.exception.InvalidCarTypeException;
+import com.cg.sprint.repository.DriverRepository;
 import com.cg.sprint.service.CabService;
 
 @RestController
@@ -27,11 +29,16 @@ public class CabController {
 
 	@Autowired
 	CabService cabService;
+	@Autowired
+	DriverRepository driverRepository;
 	
 	
-	@PostMapping("/")
-	public ResponseEntity<Cab> insertCab(@RequestBody @Valid Cab cab){
-		Cab cab1 = cabService.insertCab(cab);
+	@PostMapping("/{driver_id}")
+	public ResponseEntity<Cab> insertCab(@RequestBody @Valid Cab cab,@PathVariable("driver_id") Long driverId){
+		Driver driver=driverRepository.findById(driverId).get();
+		Cab cab1=cab;
+		cab1.setDriver(driver);
+		cabService.insertCab(cab1);
 		ResponseEntity<Cab> response = new ResponseEntity<Cab>(cab1, HttpStatus.CREATED);
 		return response;
 	}

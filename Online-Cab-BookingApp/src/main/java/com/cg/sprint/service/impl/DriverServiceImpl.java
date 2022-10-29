@@ -32,7 +32,7 @@ public class DriverServiceImpl implements DriverService {
 		driver1 = driverOpt.get();
 		driver1.setDriverId(driver.getDriverId());
 		driver1.setLicenceNO(driver.getLicenceNO());
-		driver1.setCab(driver.getCab());
+//		driver1.setCab(driver.getCab());
 		driver1.setRating(driver.getRating());
 		driverRepository.save(driver1);
 
@@ -47,17 +47,8 @@ public class DriverServiceImpl implements DriverService {
 
 	//view best drivers method
 	@Override
-	public List<Driver> viewBestDrivers() {
-		List<Driver> drivers=driverRepository.findAll();	
-		List<Driver> BestDrivers= new ArrayList<Driver>();
-		for(Driver d:drivers)
-		{
-			if(d.getRating()>=4.5)
-			{
-				BestDrivers.add(d);
-			}
-		}
-		return BestDrivers;
+	public List<Driver> viewDrivers() {
+		return driverRepository.findAll();	
 	}
 
 	//view driver using driver id method

@@ -18,9 +18,10 @@ public class CabServiceImpl implements CabService{
 
 	@Autowired
 	CabRepository cabRepository;
+	
 	@Override
 	public Cab insertCab(Cab cab) {
-		cabRepository.saveAndFlush(cab);
+		cabRepository.save(cab);
 		return cab;
 	}
 
@@ -36,7 +37,7 @@ public class CabServiceImpl implements CabService{
 	}
 
 	@Override
-	public Cab deleteCab(Long cabId) throws CabNotFoundException {
+	public void deleteCab(Long cabId) throws CabNotFoundException {
 		try {
 		cabRepository.deleteById(cabId);
 		}
@@ -44,10 +45,6 @@ public class CabServiceImpl implements CabService{
 		{
 			throw new CabNotFoundException("Cab details Not Found.");
 		}
-		
-		Optional<Cab> cabOpt=cabRepository.findById(cabId);
-		Cab cab=cabOpt.get();
-		return cab;
 	}
 
 	@Override

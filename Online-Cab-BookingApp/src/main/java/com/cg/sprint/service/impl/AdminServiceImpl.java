@@ -33,8 +33,6 @@ public class AdminServiceImpl implements AdminService {
 	CustomerRepository customerRepository;
 	@Autowired
 	TripBookingRepository tripBookingRepository;
-	@Autowired
-	Admin admin;
 
 	// insert admin method
 	@Override
@@ -46,26 +44,19 @@ public class AdminServiceImpl implements AdminService {
 	// update admin method
 	@Override
 	public Admin updateAdmin(Admin adm) throws AdminNotFoundException {
-		Optional<Admin> admOpt = adminRepository.findById(adm.getAdminId());
-		Admin adm1 = null;
-		adm1 = admOpt.get();
-		try {
-			if (admOpt.isPresent()) {
-
-				adm1.setAdminId(adm.getAdminId());
-				adm1.setUsername(adm.getUsername());
-				adm1.setPassword(adm.getPassword());
-				adm1.setAddress(adm.getAddress());
-				adm1.setMobileNumber(adm.getMobileNumber());
-				adm1.setEmail(adm.getEmail());
-				adminRepository.save(adm1);
-			} else {
-				throw new AdminNotFoundException("No such admin found");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		Admin admOpt = adminRepository.findByAdminId(adm.getAdminId());
+		if (admOpt!=null) {
+			admOpt.setAdminId(adm.getAdminId());
+			admOpt.setUsername(adm.getUsername());
+			admOpt.setPassword(adm.getPassword());
+			admOpt.setAddress(adm.getAddress());
+			admOpt.setMobileNumber(adm.getMobileNumber());
+			admOpt.setEmail(adm.getEmail());
+			adminRepository.save(admOpt);
+			return admOpt;
+		} else {
+			throw new AdminNotFoundException("No such admin found");
 		}
-		return adm1;
 	}
 
 	// delete admin method
@@ -90,7 +81,7 @@ public class AdminServiceImpl implements AdminService {
 	public List<TripBooking> getTripsCabwise(Long cabId) throws CabNotFoundException {
 		Optional<Cab> cabOpt = cabRepository.findById(cabId);
 		if (cabOpt.isPresent()) {
-			return cabRepository.findTripByTripBooking(cabId);
+			return tripBookingRepository.findTripByCabCabId(cabId);
 		} else {
 			throw new CabNotFoundException("No such cab found");
 		}
@@ -122,20 +113,15 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Boolean validateAdmin(Long adminid, String password) {
+	public String validateAdmin(Long adminid, String password) {
 		Admin adminid1 = adminRepository.findUserByadminId(adminid);
+			if (adminid1!=null&&adminid1.getPassword().equals(password)) {
 
-		try {
-			if (adminid1.getPassword().equals(password)) {
-
-				return true;
+				return "Login Successful";
 
 			} else {
-				throw new Exception();
+				throw new AdminNotFoundException("Either admin id or password is incorrect");
 			}
-		} catch (Exception e) {
-			return false;
-		}
 
 	}
 

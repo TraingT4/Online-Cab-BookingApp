@@ -1,10 +1,13 @@
 package com.cg.sprint.entity;
 
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
 public abstract class User {
+	@NotNull
 	private String username;
+	@NotNull
 	private String password;
 	private String address;
 	private String mobileNumber;

@@ -28,11 +28,12 @@ public class LoginController {
 
 	@PostMapping("/customer")
 	public ResponseEntity<String> loginCustomer(@RequestBody Customer cust1) {
-		if (customerService.validateCustomer(cust1.getCustomerId(),cust1.getPassword())) {
-			ResponseEntity<String> response = new ResponseEntity<String>("Login Sucess",HttpStatus.ACCEPTED);
+		if (customerService.validateCustomer(cust1.getCustomerId(), cust1.getPassword())) {
+			ResponseEntity<String> response = new ResponseEntity<String>("Login Sucess", HttpStatus.ACCEPTED);
 			return response;
 		} else {
-			ResponseEntity<String> response = new ResponseEntity<String>("Invalid Credentials",HttpStatus.NOT_ACCEPTABLE);
+			ResponseEntity<String> response = new ResponseEntity<String>("Invalid Credentials",
+					HttpStatus.NOT_ACCEPTABLE);
 			return response;
 		}
 
@@ -40,15 +41,9 @@ public class LoginController {
 
 	@PostMapping("/admin")
 	public ResponseEntity<String> loginAdmin(@RequestBody Admin admin) {
-		if (admin1.validateAdmin(admin.getAdminId(),admin.getPassword())) {
-			ResponseEntity<String> response = new ResponseEntity<String>("Login Sucess",HttpStatus.ACCEPTED);
-		          return response;
-		
-		}
-		else {
-			ResponseEntity<String> response = new ResponseEntity<String>("Invalid Credentials",HttpStatus.NOT_ACCEPTABLE);
-			return response;
-		}
+		String message=admin1.validateAdmin(admin.getAdminId(), admin.getPassword());
+		ResponseEntity<String> response = new ResponseEntity<String>(message, HttpStatus.ACCEPTED);
+		return response;
 
 	}
 }

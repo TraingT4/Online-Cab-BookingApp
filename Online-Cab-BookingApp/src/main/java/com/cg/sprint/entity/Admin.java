@@ -17,7 +17,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Service
 public class Admin extends User{
 	@Id
 	private Long adminId;

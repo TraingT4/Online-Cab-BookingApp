@@ -9,4 +9,5 @@ public interface AdminRepository extends JpaRepository<Admin, Long>{
 
 	  Admin findUserByadminId(Long i);
 	  Admin findUserByadminId(int adminid);
+	  Admin findByAdminId(Long adminId);
 }

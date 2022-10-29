@@ -20,7 +20,7 @@ import com.cg.sprint.entity.Driver;
 //import com.cg.sprint.service.CustomerService;
 import com.cg.sprint.service.DriverService;
 @RestController
-@RequestMapping("/drivers")
+@RequestMapping("/api/drivers")
 public class DriverController {
 	@Autowired
 	DriverService driverService;
@@ -53,7 +53,7 @@ public class DriverController {
 	//get best drivers
 	@GetMapping("/")
 	public ResponseEntity<List<Driver>> getallDrivers() {
-		List<Driver> drivers = driverService.viewBestDrivers();
+		List<Driver> drivers = driverService.viewDrivers();
 		ResponseEntity<List<Driver>> response = new ResponseEntity<>(drivers, HttpStatus.OK);
 		return response;
 	}

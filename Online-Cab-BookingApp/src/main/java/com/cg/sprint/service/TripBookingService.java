@@ -6,8 +6,8 @@ import com.cg.sprint.entity.TripBooking;
 
 public interface TripBookingService {
  
-	TripBooking insertTripBooking(TripBooking tripBooking);
-	TripBooking updateTripBooking(TripBooking tripBooking);
+	TripBooking insertTripBooking(TripBooking tripBooking, Long cabId, Long customerId);
+	TripBooking updateTripBooking(TripBooking tripBooking, Long cabId, Long customerId);
 	TripBooking deleteTripBooking(Long tripBookingId);
 	List<TripBooking> viewAllTripCustomer(Long customerId);
 	TripBooking calculateBill(Long customerId);

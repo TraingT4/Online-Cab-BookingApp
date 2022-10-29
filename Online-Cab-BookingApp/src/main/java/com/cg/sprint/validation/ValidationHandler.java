@@ -1,9 +1,10 @@
-package com.cg.sprint.validation;
+	package com.cg.sprint.validation;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -14,7 +15,7 @@ import com.cg.sprint.exception.CabNotFoundException;
 import com.cg.sprint.exception.CustomerNotFoundException;
 
 @RestControllerAdvice
-public class ValidationHandel {
+public class ValidationHandler {
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -27,27 +28,18 @@ public class ValidationHandel {
 		return errors;
 	}
 	
-	@ResponseStatus(code = HttpStatus.NOT_FOUND)
 	@ExceptionHandler(AdminNotFoundException.class)
-	public LinkedHashMap<String, String> handleAdminNotFound(AdminNotFoundException e) {
-		LinkedHashMap<String, String> errors = new LinkedHashMap<String, String>();	
-		errors.put("Admin Id",e.getMessage());
-		return errors;
+	public ResponseEntity<String> handleAdminNotFound(AdminNotFoundException e) {
+		return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
 	}
 	
-	@ResponseStatus(code = HttpStatus.NOT_FOUND)
 	@ExceptionHandler(CabNotFoundException.class)
-	public LinkedHashMap<String, String> handleCabNotFound(CabNotFoundException e) {
-		LinkedHashMap<String, String> errors = new LinkedHashMap<String, String>();	
-		errors.put("Cab Id",e.getMessage());
-		return errors;
+	public ResponseEntity<String> handleCabNotFound(CabNotFoundException e) {
+		return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
 	}
 	
-	@ResponseStatus(code = HttpStatus.NOT_FOUND)
 	@ExceptionHandler(CustomerNotFoundException.class)
-	public LinkedHashMap<String, String> handleCustomerNotFound(CabNotFoundException e) {
-		LinkedHashMap<String, String> errors = new LinkedHashMap<String, String>();	
-		errors.put("Custoner Id",e.getMessage());
-		return errors;
+	public ResponseEntity<String> handleCustomerNotFound(CustomerNotFoundException e) {
+		return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
 	}
 }

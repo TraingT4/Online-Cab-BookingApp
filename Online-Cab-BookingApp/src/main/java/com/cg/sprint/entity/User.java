@@ -1,7 +1,12 @@
 package com.cg.sprint.entity;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+
+import org.hibernate.validator.constraints.Length;
 
 @MappedSuperclass
 public abstract class User {
@@ -9,8 +14,12 @@ public abstract class User {
 	private String username;
 	@NotNull
 	private String password;
+	@NotNull
 	private String address;
+	@Column(length = 10)
+	@Positive
 	private String mobileNumber;
+	@Pattern(regexp = "^\\w+@\\w+.[a-zA-Z]+")
 	private String email;
 
 	public String getUsername() {

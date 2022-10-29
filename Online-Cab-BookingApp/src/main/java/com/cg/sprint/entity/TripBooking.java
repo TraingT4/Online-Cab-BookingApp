@@ -24,7 +24,7 @@ public class TripBooking {
 
 	@Id
 	@Column(name ="trip_booking_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long tripBookingId;
 	
 	@ManyToOne(targetEntity = Customer.class)

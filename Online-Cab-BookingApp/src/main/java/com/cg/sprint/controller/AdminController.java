@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.sprint.dto.AdminDto;
+import com.cg.sprint.dto.Convertor;
 import com.cg.sprint.entity.Admin;
 import com.cg.sprint.entity.TripBooking;
 import com.cg.sprint.exception.CabNotFoundException;
@@ -33,16 +35,19 @@ public class AdminController {
 	@Autowired
 	TripBookingService tripBookingService;
 
+	Convertor convertor=new Convertor();
 	// inserting the admin
 	@PostMapping("/")
-	public ResponseEntity<Admin> insertAdmin(@RequestBody @Valid Admin admin) {
+	public ResponseEntity<Admin> insertAdmin(@RequestBody @Valid AdminDto adminDto) {
+		Admin admin=convertor.adminDtoToEntity(adminDto);
 		Admin ad = adminService.insertAdmin(admin);
 		return new ResponseEntity<>(ad, HttpStatus.CREATED);
 	}
 
 	// update the admin
 	@PutMapping("/")
-	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin) {
+	public ResponseEntity<Admin> updateAdmin(@RequestBody AdminDto adminDto) {
+		Admin admin=convertor.adminDtoToEntity(adminDto);
 		Admin adm = adminService.updateAdmin(admin);
 		return new ResponseEntity<>(adm, HttpStatus.OK);
 	}

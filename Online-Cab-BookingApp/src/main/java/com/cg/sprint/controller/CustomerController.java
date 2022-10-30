@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.sprint.dto.Convertor;
+import com.cg.sprint.dto.CustomerDto;
 import com.cg.sprint.entity.Customer;
 import com.cg.sprint.service.CustomerService;
 
@@ -25,18 +27,20 @@ public class CustomerController {
 
 	@Autowired
 	CustomerService customerService;
-	
+	Convertor convertor=new Convertor();
 	
 	//inserting the customer
 	@PostMapping("/")
-	public ResponseEntity<Customer> insertCustomer(@RequestBody @Valid Customer customer){
+	public ResponseEntity<Customer> insertCustomer(@RequestBody @Valid CustomerDto customerDto){
+		Customer customer=convertor.customerEntitytoDto(customerDto);
 		Customer cus = customerService.insertCustomer(customer);
 		return new ResponseEntity<>(cus, HttpStatus.CREATED);
 	}
 	
 	//update the customer
 	@PutMapping("/")
-	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer){
+	public ResponseEntity<Customer> updateCustomer(@RequestBody CustomerDto customerDto){
+		Customer customer=convertor.customerEntitytoDto(customerDto);
 		Customer cus = customerService.updateCustomer(customer);
 		return new ResponseEntity<>(cus, HttpStatus.OK);
 	}

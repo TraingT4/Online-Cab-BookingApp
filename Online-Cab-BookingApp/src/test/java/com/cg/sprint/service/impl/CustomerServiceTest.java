@@ -16,7 +16,7 @@ import com.cg.sprint.entity.Customer;
 import com.cg.sprint.repository.CustomerRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class CustomerServiceTest {
+class CustomerServiceTest {
 
 	@InjectMocks
 	private CustomerServiceImpl customerService;

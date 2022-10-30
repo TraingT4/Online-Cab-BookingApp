@@ -21,7 +21,7 @@ import com.cg.sprint.repository.CabRepository;
 import com.cg.sprint.repository.DriverRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class CabServiceTest {
+class CabServiceTest {
 	@InjectMocks
 	private CabServiceImpl cabService;
 

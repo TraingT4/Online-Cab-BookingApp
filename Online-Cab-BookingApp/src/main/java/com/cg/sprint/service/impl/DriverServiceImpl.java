@@ -27,11 +27,12 @@ public class DriverServiceImpl implements DriverService {
 	@Override
 	public Driver updateDriver(Driver driver) {
 		Optional<Driver> driverOpt = driverRepository.findById(driver.getDriverId());
-		Driver driver1 = null;
-		driver1 = driverOpt.get();
+		Driver driver1 = new Driver();
+		if(driverOpt.isPresent())
+		{
+		driver1 = driverOpt.get();}
 		driver1.setDriverId(driver.getDriverId());
 		driver1.setLicenceNO(driver.getLicenceNO());
-//		driver1.setCab(driver.getCab());
 		driver1.setRating(driver.getRating());
 		driverRepository.save(driver1);
 
@@ -54,7 +55,12 @@ public class DriverServiceImpl implements DriverService {
 	@Override
 	public Driver viewDriver(Long driverId) {
 		Optional<Driver> driver = driverRepository.findById(driverId);
-		return driver.get();
+		Driver driver1=null;
+		if(driver.isPresent())
+		{
+			driver1=driver.get();
+		}
+		return driver1;
 	}
 
 }

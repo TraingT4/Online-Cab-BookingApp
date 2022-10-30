@@ -22,7 +22,7 @@ import com.cg.sprint.repository.CustomerRepository;
 import com.cg.sprint.repository.TripBookingRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class TripBookingServiceTest {
+class TripBookingServiceTest {
 
 	@InjectMocks
 	private TripBookingServiceImpl tripBookingService;

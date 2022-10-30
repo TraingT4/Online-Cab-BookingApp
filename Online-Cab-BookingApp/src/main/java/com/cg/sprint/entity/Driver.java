@@ -24,8 +24,6 @@ public class Driver extends User {
 	@NotNull(message = "Rating must not be null")
 	private Float rating;
 
-//	@OneToMany(mappedBy = "driver")
-//	private List<TripBooking> tripBooking;
 	@OneToOne(mappedBy = "driver")
 	@JsonBackReference
 	@JoinColumn(name = "cab_id")
@@ -54,26 +52,13 @@ public class Driver extends User {
 		this.rating = rating;
 	}
 
-//	public List<TripBooking> getTripBooking() {
-//		return tripBooking;
-//	}
-//	public void setTripBooking(List<TripBooking> tripBooking) {
-//		this.tripBooking = tripBooking;
-//	}
 	public Cab getCab() {
 		return cab;
 	}
 	public void setCab(Cab cab) {
 		this.cab = cab;
 	}
-//	public Driver(Long driverId, String licenceNO, Float rating, List<TripBooking> tripBooking, Cab cab) {
-//		super();
-//		this.driverId = driverId;
-//		this.licenceNO = licenceNO;
-//		this.rating = rating;
-//		this.tripBooking = tripBooking;
-//		this.cab = cab;
-//	}
+
 	public Driver() {
 		super();
 	}

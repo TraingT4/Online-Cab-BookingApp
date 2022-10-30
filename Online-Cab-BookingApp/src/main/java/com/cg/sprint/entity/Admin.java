@@ -9,7 +9,7 @@ import javax.persistence.Id;
 @Entity
 public class Admin extends User{
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long adminId;
 
 	

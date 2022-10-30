@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.sprint.dto.CabDto;
+import com.cg.sprint.dto.Convertor;
 import com.cg.sprint.entity.Cab;
 import com.cg.sprint.exception.CabNotFoundException;
 import com.cg.sprint.exception.DriverNotFoundException;
@@ -31,17 +33,19 @@ public class CabController {
 	CabService cabService;
 	@Autowired
 	DriverRepository driverRepository;
-	
+
+	Convertor convertor =new Convertor();
 	
 	@PostMapping("/{driver_id}")
-	public ResponseEntity<Cab> insertCab(@RequestBody @Valid Cab cab,@PathVariable("driver_id") Long driverId) throws DriverNotFoundException{
-		Cab cab1=cab;
-		cabService.insertCab(cab1,driverId);
-		return new ResponseEntity<>(cab1, HttpStatus.CREATED);
+	public ResponseEntity<Cab> insertCab(@RequestBody @Valid CabDto cabdto,@PathVariable("driver_id") Long driverId) throws DriverNotFoundException{
+		Cab cab=convertor.cabDtoToEntity(cabdto);
+		cabService.insertCab(cab,driverId);
+		return new ResponseEntity<>(cab, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/")
-	public ResponseEntity<Cab> updateCab(@RequestBody Cab cab) throws CabNotFoundException{
+	public ResponseEntity<Cab> updateCab(@RequestBody CabDto cabdto) throws CabNotFoundException{
+		Cab cab=convertor.cabDtoToEntity(cabdto);
 		Cab cab1 = cabService.updateCab(cab);
 		return new ResponseEntity<>(cab1, HttpStatus.OK);
 	}

@@ -27,6 +27,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 	CabRepository cabRepository;
 	@Autowired
 	CustomerRepository customerRepository;
+	String noCustomer="No such customer found";
 
 	@Override
 	public TripBooking insertTripBooking(TripBooking tripBooking, Long cabId, Long customerId)
@@ -42,7 +43,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 				tripBookingRepository.save(tripBooking);
 				return tripBooking;
 			} else {
-				throw new CustomerNotFoundException("No such customer found");
+				throw new CustomerNotFoundException(noCustomer);
 			}
 		} else {
 			throw new CabNotFoundException("No such cab found");
@@ -76,7 +77,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 					tripBookingRepository.save(tripBooking1);
 					return tripBooking1;
 				} else {
-					throw new CustomerNotFoundException("No such customer found");
+					throw new CustomerNotFoundException(noCustomer);
 				}
 			} else {
 				throw new CabNotFoundException("No such cab found");
@@ -104,7 +105,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 		return tripBookingRepository.findAll().stream().filter(t -> t.getCustomer().getCustomerId().equals(customerId))
 				.toList();
 		}else {
-			throw new CustomerNotFoundException("No such customer found");
+			throw new CustomerNotFoundException(noCustomer);
 		}
 	}
 

@@ -16,26 +16,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.sprint.dto.Convertor;
+import com.cg.sprint.dto.DriverDto;
 import com.cg.sprint.entity.Driver;
-//import com.cg.sprint.service.CustomerService;
 import com.cg.sprint.service.DriverService;
 @RestController
 @RequestMapping("/api/drivers")
 public class DriverController {
 	@Autowired
 	DriverService driverService;
-	
+	Convertor convertor=new Convertor();
 	
 	//inserting the driver
 	@PostMapping("/")
-	public ResponseEntity<Driver> insertDriver(@RequestBody @Valid Driver driver){
+	public ResponseEntity<Driver> insertDriver(@RequestBody @Valid DriverDto driverDto){
+		Driver driver=convertor.driverEntitytoDto(driverDto);
 		Driver d = driverService.insertDriver(driver);
 		return new ResponseEntity<>(d, HttpStatus.CREATED);
 	}
 	
 	//update the driver
 	@PutMapping("/")
-	public ResponseEntity<Driver> updateDriver(@RequestBody Driver driver){
+	public ResponseEntity<Driver> updateDriver(@RequestBody DriverDto driverDto){
+		Driver driver=convertor.driverEntitytoDto(driverDto);
 		Driver d = driverService.updateDriver(driver);
 		return new ResponseEntity<>(d, HttpStatus.OK);
 	}

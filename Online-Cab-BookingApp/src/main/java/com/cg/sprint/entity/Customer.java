@@ -16,11 +16,10 @@ import javax.persistence.OneToMany;
 public class Customer extends User{
 	@Id
 	@Column(name="customer_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long customerId;
 	
 	@OneToMany(mappedBy = "customer")
-//	@JsonManagedReference(value="customer")
 	private List<TripBooking> tripBooking;
 	
 	public List<TripBooking> getTripBooking() {

@@ -15,7 +15,7 @@ import com.cg.sprint.entity.Driver;
 import com.cg.sprint.repository.DriverRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class DriverServiceTest {
+class DriverServiceTest {
 	@InjectMocks
 	private DriverServiceImpl driverService;
 

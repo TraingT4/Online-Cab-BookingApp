@@ -3,9 +3,6 @@ package com.cg.sprint.service.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doNothing;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -19,7 +16,7 @@ import com.cg.sprint.entity.Admin;
 import com.cg.sprint.repository.AdminRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class AdminServiceTest {
+class AdminServiceTest {
 
 	@InjectMocks
 	private AdminServiceImpl adminService;
@@ -77,17 +74,6 @@ public class AdminServiceTest {
 		assertThat(adm.getUsername().equals("admin10"));
 		
 	}	
-
-//	private List<Admin> getAdminsMockData() {
-//		List<Admin> admins = new ArrayList<>();
-//		Admin adm1 = new Admin(1L, "admin1", "pass1", "email1", "mobil1", "address1");
-//		Admin adm2 = new Admin(2L, "admin2", "pass2", "email2", "mobil2", "address2");
-//		Admin adm3 = new Admin(3L, "admin3", "pass3", "email3", "mobil3", "address3");
-//		admins.add(adm1);
-//		admins.add(adm2);
-//		admins.add(adm3);
-//		return admins;
-//	}
 
 	private Optional<Admin> getAdminMockData() {
 		Admin adm = new Admin(10L, "admin10", "pass10", "email10", "mobil10", "address10");

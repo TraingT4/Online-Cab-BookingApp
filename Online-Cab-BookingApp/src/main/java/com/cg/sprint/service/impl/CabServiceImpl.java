@@ -29,7 +29,7 @@ public class CabServiceImpl implements CabService {
 	DriverRepository driverRepository;
 
 	@Override
-	public Cab insertCab(Cab cab, Long driverId) throws DriverNotFoundException{
+	public Cab insertCab(Cab cab, Long driverId) throws DriverNotFoundException {
 		Optional<Driver> driverOpt = driverRepository.findById(driverId);
 		if (driverOpt.isPresent()) {
 			Driver driver = driverOpt.get();
@@ -43,16 +43,16 @@ public class CabServiceImpl implements CabService {
 	}
 
 	@Override
-	public Cab updateCab(Cab cab) throws CabNotFoundException{
+	public Cab updateCab(Cab cab) throws CabNotFoundException {
 		Optional<Cab> cabOpt = cabRepository.findById(cab.getCabId());
-		if(cabOpt.isPresent()) {
-		Cab cab1 = cabOpt.get();
-		cab1.setCabId(cab.getCabId());
-		cab1.setCarType(cab.getCarType());
-		cab1.setPerKmRate(cab.getPerKmRate());
-		cabRepository.save(cab1);
-		return cab1;
-		}else {
+		if (cabOpt.isPresent()) {
+			Cab cab1 = cabOpt.get();
+			cab1.setCabId(cab.getCabId());
+			cab1.setCarType(cab.getCarType());
+			cab1.setPerKmRate(cab.getPerKmRate());
+			cabRepository.save(cab1);
+			return cab1;
+		} else {
 			throw new CabNotFoundException(cabexcp);
 		}
 	}
@@ -69,31 +69,28 @@ public class CabServiceImpl implements CabService {
 	@Override
 	public List<Cab> viewCabsOfType(String carType) throws InvalidCarTypeException {
 		List<Cab> cab1 = new ArrayList<>();
-		try {
-			List<Cab> cab = cabRepository.findAll();
-			for (Cab cabop : cab) {
-				if (cabop.getCarType().equalsIgnoreCase(carType)) {
-					cab1.add(cabop);
-				}
+		List<Cab> cab = cabRepository.findAll();
+		for (Cab cabop : cab) {
+			if (cabop.getCarType().equalsIgnoreCase(carType)) {
+				cab1.add(cabop);
 			}
-		} catch (Exception ex) {
-			throw new InvalidCarTypeException("Invalid car type.");
 		}
-		return cab1;
+		if (cab1.isEmpty()) {
+			throw new InvalidCarTypeException("Invalid car type.");
+		} else {
+			return cab1;
+		}
+
 	}
 
 	@Override
-	public Long countCabsOfType(String carType) throws InvalidCarTypeException {
+	public Long countCabsOfType(String carType) {
 		Long count = 0L;
-		try {
-			List<Cab> cab = cabRepository.findAll();
-			for (Cab cabop : cab) {
-				if (cabop.getCarType().equalsIgnoreCase(carType)) {
-					count++;
-				}
+		List<Cab> cab = cabRepository.findAll();
+		for (Cab cabop : cab) {
+			if (cabop.getCarType().equalsIgnoreCase(carType)) {
+				count++;
 			}
-		} catch (Exception ex) {
-			throw new InvalidCarTypeException("Invalid car type.");
 		}
 		return count;
 	}

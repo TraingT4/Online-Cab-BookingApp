@@ -14,6 +14,7 @@ import com.cg.sprint.exception.AdminNotFoundException;
 import com.cg.sprint.exception.CabNotFoundException;
 import com.cg.sprint.exception.CustomerNotFoundException;
 import com.cg.sprint.exception.DriverNotFoundException;
+import com.cg.sprint.exception.InvalidCarTypeException;
 import com.cg.sprint.exception.TripBookingNotFoundException;
 
 @RestControllerAdvice
@@ -51,6 +52,11 @@ public class ValidationHandler {
 	
 	@ExceptionHandler(TripBookingNotFoundException.class)
 	public ResponseEntity<String> handleTripBookingNotFound(TripBookingNotFoundException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(InvalidCarTypeException.class)
+	public ResponseEntity<String> handleInvalidCarType(InvalidCarTypeException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	}
 }

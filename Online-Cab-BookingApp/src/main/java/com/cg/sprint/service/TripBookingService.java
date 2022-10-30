@@ -10,5 +10,5 @@ public interface TripBookingService {
 	TripBooking updateTripBooking(TripBooking tripBooking, Long cabId, Long customerId);
 	TripBooking deleteTripBooking(Long tripBookingId);
 	List<TripBooking> viewAllTripCustomer(Long customerId);
-	TripBooking calculateBill(Long customerId);
+	TripBooking calculateBill(Long tripBookingId);
 }

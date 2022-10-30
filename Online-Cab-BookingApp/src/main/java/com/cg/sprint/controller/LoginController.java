@@ -1,12 +1,8 @@
 package com.cg.sprint.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,22 +24,14 @@ public class LoginController {
 
 	@PostMapping("/customer")
 	public ResponseEntity<String> loginCustomer(@RequestBody Customer cust1) {
-		if (customerService.validateCustomer(cust1.getCustomerId(), cust1.getPassword())) {
-			ResponseEntity<String> response = new ResponseEntity<String>("Login Sucess", HttpStatus.ACCEPTED);
-			return response;
-		} else {
-			ResponseEntity<String> response = new ResponseEntity<String>("Invalid Credentials",
-					HttpStatus.NOT_ACCEPTABLE);
-			return response;
-		}
-
+		String message = customerService.validateCustomer(cust1.getCustomerId(), cust1.getPassword());
+		return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
 	}
 
 	@PostMapping("/admin")
 	public ResponseEntity<String> loginAdmin(@RequestBody Admin admin) {
-		String message=admin1.validateAdmin(admin.getAdminId(), admin.getPassword());
-		ResponseEntity<String> response = new ResponseEntity<String>(message, HttpStatus.ACCEPTED);
-		return response;
+		String message = admin1.validateAdmin(admin.getAdminId(), admin.getPassword());
+		return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
 
 	}
 }

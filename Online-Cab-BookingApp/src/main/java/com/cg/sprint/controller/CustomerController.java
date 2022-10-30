@@ -31,39 +31,34 @@ public class CustomerController {
 	@PostMapping("/")
 	public ResponseEntity<Customer> insertCustomer(@RequestBody @Valid Customer customer){
 		Customer cus = customerService.insertCustomer(customer);
-		ResponseEntity<Customer> response = new ResponseEntity<Customer>(cus, HttpStatus.CREATED);
-		return response;
+		return new ResponseEntity<>(cus, HttpStatus.CREATED);
 	}
 	
 	//update the customer
 	@PutMapping("/")
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer){
 		Customer cus = customerService.updateCustomer(customer);
-		ResponseEntity<Customer> reponse = new ResponseEntity<Customer>(cus, HttpStatus.OK);
-		return reponse;
+		return new ResponseEntity<>(cus, HttpStatus.OK);
 	}
 	
 	//delete customer using customer id
 	@DeleteMapping("/{customer_id}")
 	public ResponseEntity<String> deleteCustomer(@PathVariable("customer_id") Long customerId){
 		customerService.deleteCustomer(customerId);
-		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
-		return response;
+		return new ResponseEntity<>("Successfully Deleted", HttpStatus.NO_CONTENT);
 	}
 	
 	//get all customers
 	@GetMapping("/")
 	public ResponseEntity<List<Customer>> getallCustomers() {
 		List<Customer> customers = customerService.viewCustomers();
-		ResponseEntity<List<Customer>> response = new ResponseEntity<>(customers, HttpStatus.OK);
-		return response;
+		return new ResponseEntity<>(customers, HttpStatus.OK);
 	}
 	
 	//get customer using customer id
 	@GetMapping("/{customer_id}")
 	public ResponseEntity<Customer> getCustomer(@PathVariable("customer_id") Long customerId) {
 		Customer customer = customerService.viewCustomer(customerId);
-		ResponseEntity<Customer> response = new ResponseEntity<Customer>(customer, HttpStatus.OK);
-		return response;
+		return new ResponseEntity<>(customer, HttpStatus.OK);
 	}
 }

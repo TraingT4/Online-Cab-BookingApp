@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cg.sprint.entity.Admin;
 import com.cg.sprint.entity.Cab;
 import com.cg.sprint.entity.Customer;
 import com.cg.sprint.entity.TripBooking;
@@ -70,12 +69,12 @@ public class TripBookingServiceImpl implements TripBookingService {
 	}
 
 	@Override
-	public TripBooking calculateBill(Long customerId) {
+	public TripBooking calculateBill(Long tripBookingId) {
 		List<TripBooking> trip1 =tripBookingRepository.findAll();
 		TripBooking trip=new TripBooking();
 		for(TripBooking tripop:trip1)
 		{
-			if(tripop.getCustomer().getCustomerId().equals(customerId))
+			if(tripop.getTripBookingId().equals(tripBookingId))
 			{
 				trip=tripop;
 				break;

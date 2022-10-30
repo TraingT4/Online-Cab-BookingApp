@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.sprint.entity.Admin;
-import com.cg.sprint.entity.Customer;
 import com.cg.sprint.entity.TripBooking;
 import com.cg.sprint.exception.CabNotFoundException;
 import com.cg.sprint.service.AdminService;
@@ -36,50 +35,44 @@ public class AdminController {
 
 	// inserting the admin
 	@PostMapping("/")
-	public ResponseEntity<Admin> insertAdmin(@RequestBody @Valid Admin adm) {
-		Admin ad = adminService.insertAdmin(adm);
-		ResponseEntity<Admin> response = new ResponseEntity<Admin>(ad, HttpStatus.CREATED);
-		return response;
+	public ResponseEntity<Admin> insertAdmin(@RequestBody @Valid Admin admin) {
+		Admin ad = adminService.insertAdmin(admin);
+		return new ResponseEntity<>(ad, HttpStatus.CREATED);
 	}
 
 	// update the admin
 	@PutMapping("/")
 	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin) {
 		Admin adm = adminService.updateAdmin(admin);
-		ResponseEntity<Admin> reponse = new ResponseEntity<Admin>(adm, HttpStatus.OK);
-		return reponse;
+		return new ResponseEntity<>(adm, HttpStatus.OK);
 	}
 
 	// delete admin using admin id
 	@DeleteMapping("/{admin_id}")
 	public ResponseEntity<String> deleteAdmin(@PathVariable("admin_id") Long adminId) {
 		adminService.deleteAdmin(adminId);
-		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
-		return response;
+		return new ResponseEntity<>("Successfully Deleted", HttpStatus.NO_CONTENT);
 	}
 
 	// get all trips method
 	@GetMapping("/trips")
 	public ResponseEntity<List<TripBooking>> getallTrips() {
 		List<TripBooking> trips = adminService.getAllTrips();
-		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
-		return response;
+		return new ResponseEntity<>(trips, HttpStatus.OK);
 	}
 
 	// get all trips method
 	@GetMapping("/trips/customers/{customer_id}")
 	public ResponseEntity<List<TripBooking>> getTripsCustomerwise(@PathVariable("customer_id") Long customerId) {
 		List<TripBooking> trips = adminService.getTripsCustomerwise(customerId);
-		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
-		return response;
+		return new ResponseEntity<>(trips, HttpStatus.OK);
 	}
 
 	// get trips using cab id method
 	@GetMapping("/trips/cab/{cab_id}")
 	public ResponseEntity<List<TripBooking>> getTripsCabwise(@PathVariable("cab_id") Long cabId) throws CabNotFoundException {
 		List<TripBooking> trips = adminService.getTripsCabwise(cabId);
-		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
-		return response;
+		return new ResponseEntity<>(trips, HttpStatus.OK);
 	}
 	
 	//get trips for a date
@@ -87,8 +80,7 @@ public class AdminController {
 	public ResponseEntity<List<TripBooking>> getTripsDatewise(@PathVariable("date") String date) {
 		LocalDateTime dt=LocalDateTime.parse(date);
 		List<TripBooking> trips = adminService.getTripsDatewise(dt);
-		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
-		return response;
+		return new ResponseEntity<>(trips, HttpStatus.OK);
 	}
 	
 	//get all trips using customer id, from date and to date
@@ -97,7 +89,6 @@ public class AdminController {
 		LocalDateTime fdt=LocalDateTime.parse(fromDate);
 		LocalDateTime tdt=LocalDateTime.parse(toDate);
 		List<TripBooking> trips = adminService.getAllTripsForDays(customerId, fdt, tdt);
-		ResponseEntity<List<TripBooking>> response = new ResponseEntity<>(trips, HttpStatus.OK);
-		return response;
+		return new ResponseEntity<>(trips, HttpStatus.OK);
 	}
 }

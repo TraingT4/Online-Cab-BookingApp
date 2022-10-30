@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.sprint.entity.Cab;
-import com.cg.sprint.entity.Driver;
 import com.cg.sprint.exception.CabNotFoundException;
+import com.cg.sprint.exception.DriverNotFoundException;
 import com.cg.sprint.exception.InvalidCarTypeException;
 import com.cg.sprint.repository.DriverRepository;
 import com.cg.sprint.service.CabService;
@@ -34,41 +34,34 @@ public class CabController {
 	
 	
 	@PostMapping("/{driver_id}")
-	public ResponseEntity<Cab> insertCab(@RequestBody @Valid Cab cab,@PathVariable("driver_id") Long driverId){
-		Driver driver=driverRepository.findById(driverId).get();
+	public ResponseEntity<Cab> insertCab(@RequestBody @Valid Cab cab,@PathVariable("driver_id") Long driverId) throws DriverNotFoundException{
 		Cab cab1=cab;
-		cab1.setDriver(driver);
-		cabService.insertCab(cab1);
-		ResponseEntity<Cab> response = new ResponseEntity<Cab>(cab1, HttpStatus.CREATED);
-		return response;
+		cabService.insertCab(cab1,driverId);
+		return new ResponseEntity<>(cab1, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/")
-	public ResponseEntity<Cab> updateCab(@RequestBody Cab cab){
+	public ResponseEntity<Cab> updateCab(@RequestBody Cab cab) throws CabNotFoundException{
 		Cab cab1 = cabService.updateCab(cab);
-		ResponseEntity<Cab> reponse = new ResponseEntity<Cab>(cab1, HttpStatus.OK);
-		return reponse;
+		return new ResponseEntity<>(cab1, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{cabId}")
 	public ResponseEntity<String> deleteCab(@PathVariable("cabId") Long cabId) throws CabNotFoundException{
 		cabService.deleteCab(cabId);
-		ResponseEntity<String> response = new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
-		return response;
+		return new ResponseEntity<>("Successfully Deleted", HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/{cabType}")
 	public ResponseEntity<List<Cab>> getCabTypes(@PathVariable("cabType") String carType) throws InvalidCarTypeException {
 		List<Cab> cabs = cabService.viewCabsOfType(carType);
-		ResponseEntity<List<Cab>> response = new ResponseEntity<>(cabs, HttpStatus.OK);
-		return response;
+		return new ResponseEntity<>(cabs, HttpStatus.OK);
 	}
 	
 	@GetMapping("/count/{cabType}")
 	public ResponseEntity<Long> getCountCabTypes(@PathVariable("cabType") String carType) throws InvalidCarTypeException {
 		Long cabs = cabService.countCabsOfType(carType);
-		ResponseEntity<Long> response = new ResponseEntity<>(cabs, HttpStatus.OK);
-		return response;
+		return new ResponseEntity<>(cabs, HttpStatus.OK);
 	}
 	
 }

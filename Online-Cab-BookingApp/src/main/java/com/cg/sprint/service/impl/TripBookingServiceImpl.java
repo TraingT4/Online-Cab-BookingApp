@@ -1,5 +1,6 @@
 package com.cg.sprint.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.cg.sprint.entity.Cab;
 import com.cg.sprint.entity.Customer;
 import com.cg.sprint.entity.TripBooking;
+import com.cg.sprint.exception.CabNotFoundException;
+import com.cg.sprint.exception.CustomerNotFoundException;
+import com.cg.sprint.exception.TripBookingNotFoundException;
 import com.cg.sprint.repository.CabRepository;
 import com.cg.sprint.repository.CustomerRepository;
 import com.cg.sprint.repository.TripBookingRepository;
@@ -23,65 +27,98 @@ public class TripBookingServiceImpl implements TripBookingService {
 	CabRepository cabRepository;
 	@Autowired
 	CustomerRepository customerRepository;
-	
+
 	@Override
-	public TripBooking insertTripBooking(TripBooking tripBooking,Long cabId,Long customerId) {
-		Cab cab = cabRepository.findById(cabId).get();
-		Customer customer = customerRepository.findById(customerId).get();
-		tripBooking.setCustomer(customer);
-		tripBooking.setCab(cab);
-		tripBookingRepository.save(tripBooking);
-		return tripBooking;
+	public TripBooking insertTripBooking(TripBooking tripBooking, Long cabId, Long customerId)
+			throws CustomerNotFoundException, CabNotFoundException {
+		Optional<Cab> cabOpt = cabRepository.findById(cabId);
+		if (cabOpt.isPresent()) {
+			Cab cab = cabOpt.get();
+			Optional<Customer> customerOpt = customerRepository.findById(customerId);
+			if (customerOpt.isPresent()) {
+				Customer customer = customerOpt.get();
+				tripBooking.setCustomer(customer);
+				tripBooking.setCab(cab);
+				tripBookingRepository.save(tripBooking);
+				return tripBooking;
+			} else {
+				throw new CustomerNotFoundException("No such customer found");
+			}
+		} else {
+			throw new CabNotFoundException("No such cab found");
+		}
 	}
 
 	@Override
-	public TripBooking updateTripBooking(TripBooking tripBooking,Long cabId,Long customerId) {
-		
-		Optional<TripBooking> trpbkOpt =  tripBookingRepository.findById(tripBooking.getTripBookingId());
-		TripBooking tripBooking1=null;
-		tripBooking1=trpbkOpt.get();
-		Cab cab = cabRepository.findById(cabId).get();
-		Customer customer = customerRepository.findById(customerId).get();
-		tripBooking1.setCustomer(customer);
-		tripBooking1.setCab(cab);
-		tripBooking1.setTripBookingId(tripBooking.getTripBookingId());
-		tripBooking1.setFromLocation(tripBooking.getFromLocation());
-		tripBooking1.setToLocation(tripBooking.getToLocation());
-		tripBooking1.setFromDateTime(tripBooking.getFromDateTime());
-		tripBooking1.setToDateTime(tripBooking.getToDateTime());
-		tripBooking1.setStatus(tripBooking.isStatus());
-		tripBooking1.setDistanceInKm(tripBooking.getDistanceInKm());
-		tripBooking1.setBill(tripBooking.getBill());
-		tripBookingRepository.save(tripBooking1);
-		return tripBooking1;
+	public TripBooking updateTripBooking(TripBooking tripBooking, Long cabId, Long customerId)
+			throws CabNotFoundException, CustomerNotFoundException {
+
+		Optional<TripBooking> trpbkOpt = tripBookingRepository.findById(tripBooking.getTripBookingId());
+		TripBooking tripBooking1 = null;
+		if (trpbkOpt.isPresent()) {
+			tripBooking1 = trpbkOpt.get();
+			Optional<Cab> cabOpt = cabRepository.findById(cabId);
+			if (cabOpt.isPresent()) {
+				Cab cab = cabOpt.get();
+				Optional<Customer> customerOpt = customerRepository.findById(customerId);
+				if (customerOpt.isPresent()) {
+					Customer customer = customerOpt.get();
+					tripBooking1.setCustomer(customer);
+					tripBooking1.setCab(cab);
+					tripBooking1.setTripBookingId(tripBooking.getTripBookingId());
+					tripBooking1.setFromLocation(tripBooking.getFromLocation());
+					tripBooking1.setToLocation(tripBooking.getToLocation());
+					tripBooking1.setFromDateTime(tripBooking.getFromDateTime());
+					tripBooking1.setToDateTime(tripBooking.getToDateTime());
+					tripBooking1.setStatus(tripBooking.isStatus());
+					tripBooking1.setDistanceInKm(tripBooking.getDistanceInKm());
+					tripBooking1.setBill(tripBooking.getBill());
+					tripBookingRepository.save(tripBooking1);
+					return tripBooking1;
+				} else {
+					throw new CustomerNotFoundException("No such customer found");
+				}
+			} else {
+				throw new CabNotFoundException("No such cab found");
+			}
+		} else {
+			throw new TripBookingNotFoundException("No trip booking found with that id");
+		}
 	}
 
 	@Override
-	public TripBooking deleteTripBooking(Long tripBookingId) {
-		tripBookingRepository.deleteById(tripBookingId);
-		return null;
+	public TripBooking deleteTripBooking(Long tripBookingId) throws TripBookingNotFoundException {
+		Optional<TripBooking> trpbkOpt = tripBookingRepository.findById(tripBookingId);
+		if (trpbkOpt.isPresent()) {
+			tripBookingRepository.deleteById(tripBookingId);
+			return null;
+		} else {
+			throw new TripBookingNotFoundException("No trip booking found with that id");
+		}
 	}
 
 	@Override
-	public List<TripBooking> viewAllTripCustomer(Long customerId) {
-		
-		return tripBookingRepository.findAll().stream().filter(t->t.getCustomer().getCustomerId().equals(customerId)).toList();                       
+	public List<TripBooking> viewAllTripCustomer(Long customerId) throws CustomerNotFoundException{
+		Optional<Customer> customerOpt = customerRepository.findById(customerId);
+		if (customerOpt.isPresent()) {
+		return tripBookingRepository.findAll().stream().filter(t -> t.getCustomer().getCustomerId().equals(customerId))
+				.toList();
+		}else {
+			throw new CustomerNotFoundException("No such customer found");
+		}
 	}
 
 	@Override
-	public TripBooking calculateBill(Long tripBookingId) {
-		List<TripBooking> trip1 =tripBookingRepository.findAll();
-		TripBooking trip=new TripBooking();
-		for(TripBooking tripop:trip1)
-		{
-			if(tripop.getTripBookingId().equals(tripBookingId))
-			{
-				trip=tripop;
-				break;
+	public List<TripBooking>calculateBill(Long customerId) {
+		List<TripBooking> trip1 = tripBookingRepository.findAll();
+		List<TripBooking> trip2 = new ArrayList<>();
+		for (TripBooking tripop : trip1) {
+			if (tripop.getCustomer().getCustomerId().equals(customerId)) {
+				tripop.setBill((tripop.getDistanceInKm()) * (tripop.getCab().getPerKmRate()));
+				trip2.add(tripop);
 			}
 		}
-		trip.setBill((trip.getDistanceInKm())*(trip.getCab().getPerKmRate()));
-		return trip;
+		return trip2;
 	}
 
 }

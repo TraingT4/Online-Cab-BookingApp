@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.sprint.entity.TripBooking;
+import com.cg.sprint.exception.CabNotFoundException;
+import com.cg.sprint.exception.CustomerNotFoundException;
 import com.cg.sprint.repository.CabRepository;
 import com.cg.sprint.repository.CustomerRepository;
 import com.cg.sprint.repository.TripBookingRepository;
@@ -37,7 +39,7 @@ public class TripBookingController {
 
 	@PostMapping("/{cab_id}/{customer_id}")
 	public ResponseEntity<TripBooking> insertTripBooking(@RequestBody @Valid TripBooking trb,
-			@PathVariable("cab_id") Long cabId, @PathVariable("customer_id") Long customerId) {
+			@PathVariable("cab_id") Long cabId, @PathVariable("customer_id") Long customerId) throws CustomerNotFoundException, CabNotFoundException {
 
 		TripBooking tb = tripBookingService.insertTripBooking(trb, cabId, customerId);
 		return new ResponseEntity<>(tb, HttpStatus.CREATED);
@@ -45,7 +47,7 @@ public class TripBookingController {
 
 	@PutMapping("/{cab_id}/{customer_id}")
 	public ResponseEntity<TripBooking> updateTripBooking(@RequestBody TripBooking tripBooking,
-			@PathVariable("cab_id") Long cabId, @PathVariable("customer_id") Long customerId) {
+			@PathVariable("cab_id") Long cabId, @PathVariable("customer_id") Long customerId) throws CustomerNotFoundException, CabNotFoundException {
 		TripBooking tripBooking1 = tripBookingService.updateTripBooking(tripBooking, cabId, customerId);
 		return new ResponseEntity<>(tripBooking1, HttpStatus.OK);
 	}
@@ -63,9 +65,9 @@ public class TripBookingController {
 		return new ResponseEntity<>(trips, HttpStatus.OK);
 	}
 
-	@GetMapping("/bill/{tripBooking_id}")
-	public ResponseEntity<TripBooking> getTripBillCustomerwise(@PathVariable("tripBooking_id") Long tripBookingId) {
-		TripBooking trips = tripBookingService.calculateBill(tripBookingId);
+	@GetMapping("/bill/{customer_id}")
+	public ResponseEntity<List<TripBooking>> getTripBillCustomerwise(@PathVariable("customer_id") Long customerId) {
+		List<TripBooking> trips = tripBookingService.calculateBill(customerId);
 		return new ResponseEntity<>(trips, HttpStatus.OK);
 	}
 

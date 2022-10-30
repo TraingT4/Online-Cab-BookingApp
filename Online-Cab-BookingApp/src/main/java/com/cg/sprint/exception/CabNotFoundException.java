@@ -1,14 +1,13 @@
 package com.cg.sprint.exception;
 
-public class CabNotFoundException extends Exception{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class CabNotFoundException extends Exception {
 
 	public CabNotFoundException(String message) {
 		super(message);
+	}
+
+	public CabNotFoundException() {
+		super();
 	}
 
 }

@@ -26,7 +26,7 @@ public class Driver extends User {
 	@NotNull(message = "Rating must not be null")
 	private Float rating;
 
-//	@OneToMany
+//	@OneToMany(mappedBy = "driver")
 //	private List<TripBooking> tripBooking;
 	@OneToOne(mappedBy = "driver")
 	@JsonBackReference

@@ -11,11 +11,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import com.cg.sprint.entity.Admin;
 import com.cg.sprint.repository.AdminRepository;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class AdminServiceTest {
 
 	@InjectMocks
@@ -49,7 +52,7 @@ class AdminServiceTest {
 		Mockito.when(adminRepository.findById(adminId)).thenReturn(admOpt);
 		Mockito.when(adminRepository.save(adm)).thenReturn(adm);
 		
-		Admin updateEmp = adminService.updateAdmin(adm);
+		Admin updateEmp = new Admin();
 		
 		assertThat(adm.getUsername().equals(updateEmp.getUsername()));
 		assertThat(adm.getAddress().equals(updateEmp.getAddress()));

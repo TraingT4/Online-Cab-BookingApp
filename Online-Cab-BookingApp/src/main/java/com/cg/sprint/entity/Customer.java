@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 public class Customer extends User{
 	@Id
 	@Column(name="customer_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long customerId;
 	
 	@OneToMany(mappedBy = "customer")

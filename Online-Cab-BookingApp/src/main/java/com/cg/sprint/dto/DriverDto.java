@@ -6,6 +6,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.cg.sprint.entity.Cab;
 
 public class DriverDto {

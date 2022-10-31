@@ -1,5 +1,6 @@
 package com.cg.sprint.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,11 +46,26 @@ public class DriverServiceImpl implements DriverService {
 		driverRepository.deleteById(driverId);
 	}
 
-	//view best drivers method
+	//view drivers method
 	@Override
 	public List<Driver> viewDrivers() {
 		return driverRepository.findAll();	
 	}
+	
+	//view best drivers method
+		@Override
+		public List<Driver> viewBestDrivers() {
+			List<Driver> drivers=driverRepository.findAll();	
+			List<Driver> BestDrivers= new ArrayList<Driver>();
+			for(Driver d:drivers)
+			{
+				if(d.getRating()>=4.5)
+				{
+					BestDrivers.add(d);
+				}
+			}
+			return BestDrivers;
+		}
 
 	//view driver using driver id method
 	@Override

@@ -14,5 +14,6 @@ public interface DriverService {
 	Driver updateDriver(Driver driver);
 	void deleteDriver(Long driverId);
 	List<Driver> viewDrivers();
+	List<Driver> viewBestDrivers();
 	Driver viewDriver(Long driverId);
 }

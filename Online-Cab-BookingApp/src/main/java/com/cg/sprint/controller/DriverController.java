@@ -57,6 +57,13 @@ public class DriverController {
 		return new ResponseEntity<>(drivers, HttpStatus.OK);
 	}
 	
+	//get best drivers
+		@GetMapping("/best")
+		public ResponseEntity<List<Driver>> getbestDrivers() {
+			List<Driver> drivers = driverService.viewBestDrivers();
+			return new ResponseEntity<>(drivers, HttpStatus.OK);
+		}
+	
 	//get driver using driver id
 	@GetMapping("/{driver_id}")
 	public ResponseEntity<Driver> getDriver(@PathVariable("driver_id") Long driverId) {

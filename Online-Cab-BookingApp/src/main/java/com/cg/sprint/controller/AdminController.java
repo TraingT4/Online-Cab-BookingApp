@@ -92,6 +92,8 @@ public class AdminController {
 	//get all trips using customer id, from date and to date
 	@GetMapping("/trips/customers/{customer_id}/{from_date}/{to_date}")
 	public ResponseEntity<List<TripBooking>> getAllTripsForDays(@PathVariable("customer_id") Long customerId,@PathVariable("from_date") String fromDate,@PathVariable("to_date") String toDate) {
+		fromDate=fromDate+"T00:00:00.000";
+		toDate=toDate+"T00:00:00.000";
 		LocalDateTime fdt=LocalDateTime.parse(fromDate);
 		LocalDateTime tdt=LocalDateTime.parse(toDate);
 		List<TripBooking> trips = adminService.getAllTripsForDays(customerId, fdt, tdt);

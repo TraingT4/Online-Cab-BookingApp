@@ -30,7 +30,6 @@ public class Cab {
 	@JsonIdentityReference(alwaysAsId = true)
 	private Driver driver;
 	@OneToMany(mappedBy = "cab")
-//	@JsonManagedReference(value="cab")
 	private List<TripBooking> tripBooking;
 
 	public Driver getDriver() {

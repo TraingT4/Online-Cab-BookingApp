@@ -2,12 +2,17 @@ package com.cg.sprint.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+
 import com.cg.sprint.entity.Driver;
 import com.cg.sprint.entity.TripBooking;
 
 public class CabDto {
 	private Long cabId;
+	@NotBlank(message="car type must not be empty")
 	private String carType;
+	@Positive(message="Rate per Km must be positive")
 	private Float perKmRate;
 	private Driver driver;
 	private List<TripBooking> tripBooking;

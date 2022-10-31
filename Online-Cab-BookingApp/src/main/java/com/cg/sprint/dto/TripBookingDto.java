@@ -2,6 +2,9 @@ package com.cg.sprint.dto;
 
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 import com.cg.sprint.entity.Cab;
 import com.cg.sprint.entity.Customer;
 
@@ -10,11 +13,16 @@ public class TripBookingDto {
 	private Long tripBookingId;
 	private Customer customer;
 	private Cab cab;
+	@NotNull(message = "fromLocation should not be null")
 	private String fromLocation;
+	@NotNull(message = "toLocation should not be null")
 	private String toLocation;
+	@NotNull(message = "fromDateTime should not be null")
 	private LocalDateTime fromDateTime;
+	@NotNull(message = "toDateTime should not be null")
 	private LocalDateTime toDateTime;
 	private Boolean status;
+	@Positive(message = "distance should be Positive")
 	private Float distanceInKm;
 	private Float bill;
 	public Long getTripBookingId() {

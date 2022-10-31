@@ -1,16 +1,31 @@
 package com.cg.sprint.dto;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+
 import com.cg.sprint.entity.Cab;
 
 public class DriverDto {
+	
 	private Long driverId;
+	@NotBlank(message = "Licence Number must not be null")
 	private String licenceNO;
+	@NotNull(message = "Rating must not be null")
 	private Float rating;
 	private Cab cab;
+	@NotNull
 	private String username;
+	@NotNull
 	private String password;
+	@Pattern(regexp = "^\\w+@\\w+.[a-zA-Z]+")
 	private String email;
+	@Column(length = 10)
+	@Positive
 	private String mobile;
+	@NotNull
 	private String address;
 	
 	public String getUsername() {

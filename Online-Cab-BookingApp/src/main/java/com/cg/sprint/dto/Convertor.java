@@ -26,7 +26,7 @@ public class Convertor {
 		admin.setAdminId(adminDto.getAdminId());
 		admin.setAddress(adminDto.getAddress());
 		admin.setEmail(adminDto.getEmail());
-		admin.setMobileNumber(adminDto.getMobile());
+		admin.setMobileNumber(adminDto.getMobileNumber());
 		admin.setPassword(adminDto.getPassword());
 		admin.setUsername(adminDto.getUsername());
 		return admin;
@@ -38,7 +38,7 @@ public class Convertor {
 		customer.setAddress(customerDto.getAddress());
 		customer.setCustomerId(customerDto.getCustomerId());
 		customer.setEmail(customerDto.getEmail());
-		customer.setMobileNumber(customerDto.getMobile());
+		customer.setMobileNumber(customerDto.getMobileNumber());
 		customer.setPassword(customerDto.getPassword());
 		customer.setTripBooking(customerDto.getTripBooking());
 		customer.setUsername(customerDto.getUsername());
@@ -53,7 +53,7 @@ public class Convertor {
 		driver.setDriverId(driverDto.getDriverId());
 		driver.setEmail(driverDto.getEmail());
 		driver.setLicenceNO(driverDto.getLicenceNO());
-		driver.setMobileNumber(driverDto.getMobile());
+		driver.setMobileNumber(driverDto.getMobileNumber());
 		driver.setPassword(driverDto.getPassword());
 		driver.setRating(driverDto.getRating());
 		driver.setUsername(driverDto.getUsername());

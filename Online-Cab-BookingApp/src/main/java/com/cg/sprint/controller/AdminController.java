@@ -83,6 +83,7 @@ public class AdminController {
 	//get trips for a date
 	@GetMapping("/trips/{date}")
 	public ResponseEntity<List<TripBooking>> getTripsDatewise(@PathVariable("date") String date) {
+		date=date+"T00:00:00.000";
 		LocalDateTime dt=LocalDateTime.parse(date);
 		List<TripBooking> trips = adminService.getTripsDatewise(dt);
 		return new ResponseEntity<>(trips, HttpStatus.OK);

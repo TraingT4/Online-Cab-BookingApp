@@ -16,7 +16,7 @@ public class AdminDto {
 	private String email;
 	@Column(length = 10)
 	@Positive
-	private String mobile;
+	private String mobileNumber;
 	@NotNull
 	private String address;
 	public Long getAdminId() {
@@ -43,11 +43,11 @@ public class AdminDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getMobile() {
-		return mobile;
+	public String getMobileNumber() {
+		return mobileNumber;
 	}
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 	public String getAddress() {
 		return address;

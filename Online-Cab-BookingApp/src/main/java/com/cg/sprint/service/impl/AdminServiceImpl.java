@@ -45,16 +45,16 @@ public class AdminServiceImpl implements AdminService {
 	public Admin updateAdmin(Admin adm) throws AdminNotFoundException {
 		Admin admOpt = adminRepository.findByAdminId(adm.getAdminId());
 		if (admOpt != null) {
-//			admOpt.setAdminId(adm.getAdminId());
-//			admOpt.setUsername(adm.getUsername());
-//			admOpt.setPassword(adm.getPassword());
-//			admOpt.setAddress(adm.getAddress());
-//			admOpt.setMobileNumber(adm.getMobileNumber());
-//			admOpt.setEmail(adm.getEmail());
+			admOpt.setAdminId(adm.getAdminId());
+			admOpt.setUsername(adm.getUsername());
+			admOpt.setPassword(adm.getPassword());
+			admOpt.setAddress(adm.getAddress());
+			admOpt.setMobileNumber(adm.getMobileNumber());
+			admOpt.setEmail(adm.getEmail());
 			adminRepository.save(admOpt);
 			return admOpt;
 		} else {
-			throw new AdminNotFoundException("No admin found with id: "+adm.getAdminId());
+			throw new AdminNotFoundException("No admin found with id: " + adm.getAdminId());
 		}
 	}
 
@@ -65,7 +65,7 @@ public class AdminServiceImpl implements AdminService {
 		if (admOpt.isPresent()) {
 			adminRepository.deleteById(adminId);
 		} else {
-			throw new AdminNotFoundException("No admin found with id: "+adminId);
+			throw new AdminNotFoundException("No admin found with id: " + adminId);
 		}
 	}
 
@@ -85,7 +85,13 @@ public class AdminServiceImpl implements AdminService {
 	public List<TripBooking> getTripsCabwise(Long cabId) throws CabNotFoundException {
 		Optional<Cab> cabOpt = cabRepository.findById(cabId);
 		if (cabOpt.isPresent()) {
-			return tripBookingRepository.findTripByCabCabId(cabId);
+			List<TripBooking> tripList = tripBookingRepository.findTripByCabCabId(cabId);
+			if (tripList.isEmpty()) {
+				throw new TripBookingNotFoundException("No trips booked for cab: " + cabId);
+				
+			} else {
+				return tripList;
+			}
 		} else {
 			throw new CabNotFoundException("No cab found with id: " + cabId);
 		}
@@ -103,7 +109,7 @@ public class AdminServiceImpl implements AdminService {
 				return custTrip;
 			}
 		} else {
-			throw new CustomerNotFoundException("No customer found with id: "+customerId);
+			throw new CustomerNotFoundException("No customer found with id: " + customerId);
 		}
 	}
 
@@ -113,8 +119,8 @@ public class AdminServiceImpl implements AdminService {
 		List<TripBooking> tripDate = tripBookingRepository.findAll().stream()
 				.filter(t -> t.getFromDateTime().getDayOfYear() == date.getDayOfYear()).toList();
 		if (tripDate.isEmpty()) {
-			String[] str=date.toString().split("T");
-			throw new TripBookingNotFoundException("No trips booked for date: "+str[0]);
+			String[] str = date.toString().split("T");
+			throw new TripBookingNotFoundException("No trips booked for date: " + str[0]);
 		} else {
 			return tripDate;
 		}
@@ -130,14 +136,15 @@ public class AdminServiceImpl implements AdminService {
 							&& (t.getFromDateTime().isAfter(fromDate) && t.getFromDateTime().isBefore(toDate)))
 					.toList();
 			if (tripDate.isEmpty()) {
-				String[] str1=fromDate.toString().split("T");
-				String[] str2=toDate.toString().split("T");
-				throw new TripBookingNotFoundException("No trips booked from "+str1[0]+" to "+str2[0]+" by customer "+customerId);
+				String[] str1 = fromDate.toString().split("T");
+				String[] str2 = toDate.toString().split("T");
+				throw new TripBookingNotFoundException(
+						"No trips booked from " + str1[0] + " to " + str2[0] + " by customer " + customerId);
 			} else {
 				return tripDate;
 			}
 		} else {
-			throw new CustomerNotFoundException("No customer found with id: "+customerId);
+			throw new CustomerNotFoundException("No customer found with id: " + customerId);
 		}
 	}
 

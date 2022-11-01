@@ -74,5 +74,11 @@ public class TripBookingController {
 		List<TripBooking> trips = tripBookingService.calculateBill(customerId);
 		return new ResponseEntity<>(trips, HttpStatus.OK);
 	}
+	
+//	@GetMapping("/bill/{customer_id}/{tripBooking_id}")
+//	public ResponseEntity<TripBooking> getTripBillTripwise(@PathVariable("customer_id") Long customerId,@PathVariable("tripBooking_id") Long tripBookingId) {
+//		TripBooking trip = tripBookingService.calculateTripBill(customerId,tripBookingId);
+//		return new ResponseEntity<>(trip, HttpStatus.OK);
+//	}
 
 }

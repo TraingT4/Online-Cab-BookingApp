@@ -21,6 +21,7 @@ public class CabServiceImpl implements CabService {
 
 	String drexcp = "No such driver found";
 	String cabexcp = "No such cab found";
+	String dra="Driver is already assigned to another Cab.";
 
 	@Autowired
 	CabRepository cabRepository;
@@ -33,9 +34,26 @@ public class CabServiceImpl implements CabService {
 		Optional<Driver> driverOpt = driverRepository.findById(driverId);
 		if (driverOpt.isPresent()) {
 			Driver driver = driverOpt.get();
+			List<Cab> cab2=cabRepository.findAll();
+			Boolean status=true;
+			for(Cab cabop:cab2)
+			{
+				if(cabop.getDriver().getDriverId()==driverId)
+				{
+					status=false;
+					break;
+				}
+			}
+			if(status)
+			{
 			Cab cab1 = cab;
 			cab1.setDriver(driver);
-			cabRepository.save(cab);
+			cab=cabRepository.save(cab);
+			}
+			else
+			{
+				throw new DriverNotFoundException(dra);
+			}
 			return cab;
 		} else {
 			throw new DriverNotFoundException(drexcp);
@@ -47,10 +65,28 @@ public class CabServiceImpl implements CabService {
 		Optional<Cab> cabOpt = cabRepository.findById(cab.getCabId());
 		if (cabOpt.isPresent()) {
 			Cab cab1 = cabOpt.get();
+			List<Cab> cab2=cabRepository.findAll();
+			Boolean driverOpt=true;
+			for(Cab cabop:cab2)
+			{
+				if(cabop.getDriver().getDriverId()==cab.getDriver().getDriverId())
+				{
+					driverOpt=false;
+					break;
+				}
+			}
+			if(driverOpt)
+			{
 			cab1.setCabId(cab.getCabId());
 			cab1.setCarType(cab.getCarType());
 			cab1.setPerKmRate(cab.getPerKmRate());
+			cab1.setDriver(cab.getDriver());
 			cabRepository.save(cab1);
+			}
+			else
+			{
+				throw new CabNotFoundException(dra);
+			}
 			return cab1;
 		} else {
 			throw new CabNotFoundException(cabexcp);
@@ -75,8 +111,8 @@ public class CabServiceImpl implements CabService {
 				cab1.add(cabop);
 			}
 		}
-		if (cab1.isEmpty()) {
-			throw new InvalidCarTypeException("Invalid car type.");
+		if (!(carType.equalsIgnoreCase("XUV")||carType.equalsIgnoreCase("mini"))) {
+			throw new InvalidCarTypeException("Car type is Invalid.");
 		} else {
 			return cab1;
 		}
@@ -84,7 +120,7 @@ public class CabServiceImpl implements CabService {
 	}
 
 	@Override
-	public Long countCabsOfType(String carType) {
+	public Long countCabsOfType(String carType) throws InvalidCarTypeException {
 		Long count = 0L;
 		List<Cab> cab = cabRepository.findAll();
 		for (Cab cabop : cab) {
@@ -92,7 +128,11 @@ public class CabServiceImpl implements CabService {
 				count++;
 			}
 		}
-		return count;
+		if (!(carType.equalsIgnoreCase("XUV")||carType.equalsIgnoreCase("mini"))) {
+			throw new InvalidCarTypeException("Invalid car type.");
+		} else {
+			return count;
+		}
 	}
 
 }

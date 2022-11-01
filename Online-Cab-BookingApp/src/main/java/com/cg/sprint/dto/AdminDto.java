@@ -14,7 +14,7 @@ public class AdminDto {
 	private String password;
 	@Pattern(regexp = "^\\w+@\\w+.[a-zA-Z]+")
 	private String email;
-	@Column(length = 10)
+	@Pattern(regexp = "\\d{10}",message = "Mobile number should be 10 digits")
 	@Positive
 	private String mobileNumber;
 	@NotNull

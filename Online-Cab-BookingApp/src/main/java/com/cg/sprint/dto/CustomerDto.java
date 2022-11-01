@@ -2,7 +2,6 @@ package com.cg.sprint.dto;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
@@ -17,7 +16,7 @@ public class CustomerDto {
 	private String password;
 	@Pattern(regexp = "^\\w+@\\w+.[a-zA-Z]+")
 	private String email;
-	@Column(length = 10)
+	@Pattern(regexp = "\\d{10}",message = "Mobile number should be 10 digits")
 	@Positive
 	private String mobileNumber;
 	@NotNull

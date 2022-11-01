@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
 public class TripBooking {
@@ -44,7 +45,7 @@ public class TripBooking {
 	private Boolean status;
 	@Positive(message = "distance should be Positive")
 	private Float distanceInKm;
-	
+	@JsonIgnore
 	private Float bill;
 
 	public Long getTripBookingId() {

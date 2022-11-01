@@ -14,11 +14,11 @@ import com.cg.sprint.service.CustomerService;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-	String excep = "No such customer found";
 
 	@Autowired
 	CustomerRepository customerRepository;
-
+	
+	String custexcp="No customer found with id: ";
 	// insert customer method
 	@Override
 	public Customer insertCustomer(Customer cust) {
@@ -30,19 +30,19 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer updateCustomer(Customer cust) throws CustomerNotFoundException {
 		Optional<Customer> cusOpt = customerRepository.findById(cust.getCustomerId());
-		Customer cust1 = null;
+//		Customer cust1 = null;
 		if (cusOpt.isPresent()) {
-			cust1 = cusOpt.get();
-			cust1.setCustomerId(cust.getCustomerId());
-			cust1.setUsername(cust.getUsername());
-			cust1.setPassword(cust.getPassword());
-			cust1.setAddress(cust.getAddress());
-			cust1.setMobileNumber(cust.getMobileNumber());
-			cust1.setEmail(cust.getEmail());
+			Customer cust1 = cusOpt.get();
+//			cust1.setCustomerId(cust.getCustomerId());
+//			cust1.setUsername(cust.getUsername());
+//			cust1.setPassword(cust.getPassword());
+//			cust1.setAddress(cust.getAddress());
+//			cust1.setMobileNumber(cust.getMobileNumber());
+//			cust1.setEmail(cust.getEmail());
 			customerRepository.save(cust1);
 			return cust1;
 		} else {
-			throw new CustomerNotFoundException(excep);
+			throw new CustomerNotFoundException(custexcp+cust.getCustomerId());
 		}
 	}
 
@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
 		if (cusOpt.isPresent()) {
 			customerRepository.deleteById(customerId);
 		} else {
-			throw new CustomerNotFoundException(excep);
+			throw new CustomerNotFoundException(custexcp+customerId);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
 		if (cusOpt.isPresent()) {
 			return customerRepository.findUserByCustomerId(customerId);
 		} else {
-			throw new CustomerNotFoundException(excep);
+			throw new CustomerNotFoundException(custexcp+customerId);
 		}
 	}
 

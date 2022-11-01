@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.cg.sprint.exception.AdminNotFoundException;
 import com.cg.sprint.exception.CabNotFoundException;
 import com.cg.sprint.exception.CustomerNotFoundException;
+import com.cg.sprint.exception.DriverAlreadyAssignedToACabException;
 import com.cg.sprint.exception.DriverNotFoundException;
 import com.cg.sprint.exception.InvalidCarTypeException;
 import com.cg.sprint.exception.TripBookingNotFoundException;
@@ -58,5 +59,15 @@ public class ValidationHandler {
 	@ExceptionHandler(InvalidCarTypeException.class)
 	public ResponseEntity<String> handleInvalidCarType(InvalidCarTypeException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(DriverAlreadyAssignedToACabException.class)
+	public ResponseEntity<String> handleDriverAlreadyAssignedToACab(DriverAlreadyAssignedToACabException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> handleException(Exception e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 	}
 }

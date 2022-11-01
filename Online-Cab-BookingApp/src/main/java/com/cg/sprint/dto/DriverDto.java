@@ -22,9 +22,9 @@ public class DriverDto {
 	private String username;
 	@NotNull
 	private String password;
-	@Pattern(regexp = "^\\w+@\\w+.[a-zA-Z]+")
+	@Pattern(regexp = "\\d{10}",message = "Mobile number should be 10 digits")
 	private String email;
-	@Column(length = 10)
+	@Pattern(regexp = "\\d{10}")
 	@Positive
 	private String mobileNumber;
 	@NotNull

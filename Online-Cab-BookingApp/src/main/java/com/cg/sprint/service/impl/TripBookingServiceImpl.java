@@ -27,7 +27,9 @@ public class TripBookingServiceImpl implements TripBookingService {
 	CabRepository cabRepository;
 	@Autowired
 	CustomerRepository customerRepository;
-	String noCustomer="No such customer found";
+	
+	String custexcp="No customer found with id: ";
+	String cabexcp="No cab found with id: ";
 
 	@Override
 	public TripBooking insertTripBooking(TripBooking tripBooking, Long cabId, Long customerId)
@@ -40,13 +42,14 @@ public class TripBookingServiceImpl implements TripBookingService {
 				Customer customer = customerOpt.get();
 				tripBooking.setCustomer(customer);
 				tripBooking.setCab(cab);
+				tripBooking.setBill((tripBooking.getDistanceInKm()) * (tripBooking.getCab().getPerKmRate()));
 				tripBookingRepository.save(tripBooking);
 				return tripBooking;
 			} else {
-				throw new CustomerNotFoundException(noCustomer);
+				throw new CustomerNotFoundException(custexcp+customerId);
 			}
 		} else {
-			throw new CabNotFoundException("No such cab found");
+			throw new CabNotFoundException(cabexcp+cabId);
 		}
 	}
 
@@ -77,13 +80,13 @@ public class TripBookingServiceImpl implements TripBookingService {
 					tripBookingRepository.save(tripBooking1);
 					return tripBooking1;
 				} else {
-					throw new CustomerNotFoundException(noCustomer);
+					throw new CustomerNotFoundException(custexcp+customerId);
 				}
 			} else {
-				throw new CabNotFoundException("No such cab found");
+				throw new CabNotFoundException(cabexcp+cabId);
 			}
 		} else {
-			throw new TripBookingNotFoundException("No trip booking found with that id");
+			throw new TripBookingNotFoundException("No trip booking found with id: "+tripBooking.getTripBookingId());
 		}
 	}
 
@@ -94,7 +97,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 			tripBookingRepository.deleteById(tripBookingId);
 			return null;
 		} else {
-			throw new TripBookingNotFoundException("No trip booking found with that id");
+			throw new TripBookingNotFoundException("No trip booking found with id: "+tripBookingId);
 		}
 	}
 
@@ -105,7 +108,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 		return tripBookingRepository.findAll().stream().filter(t -> t.getCustomer().getCustomerId().equals(customerId))
 				.toList();
 		}else {
-			throw new CustomerNotFoundException(noCustomer);
+			throw new CustomerNotFoundException(custexcp+customerId);
 		}
 	}
 
@@ -121,5 +124,23 @@ public class TripBookingServiceImpl implements TripBookingService {
 		}
 		return trip2;
 	}
+	
+//	@Override
+//	public TripBooking calculateTripBill(Long customerId, Long tripBookingId) {
+//		Optional<Customer> customerOpt = customerRepository.findById(customerId);
+//		if (customerOpt.isPresent()) {
+//			Optional<List<TripBooking>> trpbkOpt = tripBookingRepository.findTripByCustomerCustomerId(customerId);
+//			if(trpbkOpt.)
+//			if (trpbkOpt.isPresent()) {
+//			for (TripBooking tripop : trip1) {
+//				if (tripop.getCustomer().getCustomerId().equals(customerId)) {
+//					tripop.setBill((tripop.getDistanceInKm()) * (tripop.getCab().getPerKmRate()));
+//					trip2.add(tripop);
+//				}
+//		}
+//		
+//		}
+//		return trip2;
+//	}
 
 }

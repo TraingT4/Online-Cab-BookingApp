@@ -19,4 +19,6 @@ public interface TripBookingService {
 	List<TripBooking> viewAllTripCustomer(Long customerId) throws CustomerNotFoundException;
 
 	List<TripBooking> calculateBill(Long customerId);
+
+//	TripBooking calculateTripBill(Long customerId, Long tripBookingId);
 }

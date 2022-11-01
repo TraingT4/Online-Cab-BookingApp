@@ -45,7 +45,7 @@ public class TripBooking {
 	private Boolean status;
 	@Positive(message = "distance should be Positive")
 	private Float distanceInKm;
-	@JsonIgnore
+	
 	private Float bill;
 
 	public Long getTripBookingId() {

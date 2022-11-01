@@ -36,10 +36,10 @@ public class DriverController {
 	}
 	
 	//update the driver
-	@PutMapping("/")
-	public ResponseEntity<Driver> updateDriver(@RequestBody DriverDto driverDto){
+	@PutMapping("/{driver_id}")
+	public ResponseEntity<Driver> updateDriver(@RequestBody DriverDto driverDto,@PathVariable("driver_id") Long driverId){
 		Driver driver=convertor.driverEntitytoDto(driverDto);
-		Driver d = driverService.updateDriver(driver);
+		Driver d = driverService.updateDriver(driver,driverId);
 		return new ResponseEntity<>(d, HttpStatus.OK);
 	}
 	
@@ -50,7 +50,7 @@ public class DriverController {
 		return new ResponseEntity<>("Successfully Deleted", HttpStatus.NO_CONTENT);
 	}
 	
-	//get best drivers
+	//get drivers
 	@GetMapping("/")
 	public ResponseEntity<List<Driver>> getallDrivers() {
 		List<Driver> drivers = driverService.viewDrivers();

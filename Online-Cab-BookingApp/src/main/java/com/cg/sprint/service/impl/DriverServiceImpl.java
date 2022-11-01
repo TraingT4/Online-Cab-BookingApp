@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.sprint.entity.Driver;
+import com.cg.sprint.exception.DriverNotFoundException;
 import com.cg.sprint.repository.DriverRepository;
 import com.cg.sprint.service.DriverService;
 
@@ -15,7 +16,7 @@ import com.cg.sprint.service.DriverService;
 public class DriverServiceImpl implements DriverService {
 	@Autowired
 	DriverRepository driverRepository;
-	
+	String driverexcp = "No such driver found";
 	
 	//insert driver method
 	@Override
@@ -26,24 +27,38 @@ public class DriverServiceImpl implements DriverService {
 
 	//update driver method
 	@Override
-	public Driver updateDriver(Driver driver) {
-		Optional<Driver> driverOpt = driverRepository.findById(driver.getDriverId());
+	public Driver updateDriver(Driver driver,Long driverId) throws DriverNotFoundException{
+		Optional<Driver> driverOpt = driverRepository.findById(driverId);
 		Driver driver1 = new Driver();
 		if(driverOpt.isPresent())
 		{
-		driver1 = driverOpt.get();}
-		driver1.setDriverId(driver.getDriverId());
+		driver1 = driverOpt.get();
 		driver1.setLicenceNO(driver.getLicenceNO());
 		driver1.setRating(driver.getRating());
+		driver1.setUsername(driver.getUsername());
+		driver1.setPassword(driver.getPassword());
+		driver1.setMobileNumber(driver.getMobileNumber());
+		driver1.setAddress(driver.getAddress());
+		driver1.setEmail(driver.getEmail());
 		driverRepository.save(driver1);
-
 		return driver1;
+		}
+		else {
+			throw new DriverNotFoundException(driverexcp); 
+		}
 	}
 
 	//delete driver using driver id method
 	@Override
-	public void deleteDriver(Long driverId) {
-		driverRepository.deleteById(driverId);
+	public void deleteDriver(Long driverId) throws DriverNotFoundException{
+		Optional<Driver> driver = driverRepository.findById(driverId);
+		if(driver.isPresent())
+		{
+			driverRepository.deleteById(driverId);
+		}
+		else {
+			throw new DriverNotFoundException(driverexcp); 
+		}
 	}
 
 	//view drivers method
@@ -69,14 +84,17 @@ public class DriverServiceImpl implements DriverService {
 
 	//view driver using driver id method
 	@Override
-	public Driver viewDriver(Long driverId) {
+	public Driver viewDriver(Long driverId) throws DriverNotFoundException{
 		Optional<Driver> driver = driverRepository.findById(driverId);
 		Driver driver1=null;
 		if(driver.isPresent())
 		{
 			driver1=driver.get();
-		}
 		return driver1;
+		}
+		else {
+			throw new DriverNotFoundException(driverexcp); 
+		}
 	}
 
 }

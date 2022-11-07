@@ -86,7 +86,13 @@ class CabServiceTest {
 		List<Cab> cabs = getCabsMockData();
 		Mockito.when(cabRepository.findAll()).thenReturn(cabs);
 		Long count = 0L;
-		count = cabService.countCabsOfType("mini");
+		
+		try {
+			count = cabService.countCabsOfType("mini");
+		} catch (InvalidCarTypeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for (Cab cab : cabs) {
 			if (cab.getCarType().equals("mini")) {
 				count++;

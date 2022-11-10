@@ -46,7 +46,7 @@ public class AdminController {
 
 	// update the admin
 	@PutMapping("/")
-	public ResponseEntity<Admin> updateAdmin(@RequestBody AdminDto adminDto) {
+	public ResponseEntity<Admin> updateAdmin(@RequestBody @Valid AdminDto adminDto) {
 		Admin admin=convertor.adminDtoToEntity(adminDto);
 		Admin adm = adminService.updateAdmin(admin);
 		return new ResponseEntity<>(adm, HttpStatus.OK);

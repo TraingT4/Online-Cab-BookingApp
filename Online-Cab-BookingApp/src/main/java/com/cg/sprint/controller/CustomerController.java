@@ -39,7 +39,7 @@ public class CustomerController {
 	
 	//update the customer
 	@PutMapping("/")
-	public ResponseEntity<Customer> updateCustomer(@RequestBody CustomerDto customerDto){
+	public ResponseEntity<Customer> updateCustomer(@RequestBody @Valid CustomerDto customerDto){
 		Customer customer=convertor.customerEntitytoDto(customerDto);
 		Customer cus = customerService.updateCustomer(customer);
 		return new ResponseEntity<>(cus, HttpStatus.OK);

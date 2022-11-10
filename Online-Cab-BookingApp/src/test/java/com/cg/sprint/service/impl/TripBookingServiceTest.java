@@ -81,7 +81,6 @@ class TripBookingServiceTest {
 		//trb.setTripBookingId(102L);
 	    trb.setCustomer(cust);
 		trb.setCab(cab);
-
 		//trb.setFromDateTime( LocalDateTime.of(2017, 2, 13, 15, 56));
 		//trb.setToDateTime(LocalDateTime.of(2017, 2, 13, 15, 56));
 		trb.setFromLocation("malda");

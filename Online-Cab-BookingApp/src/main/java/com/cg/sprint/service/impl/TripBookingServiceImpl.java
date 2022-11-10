@@ -30,6 +30,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 	
 	String custexcp="No customer found with id: ";
 	String cabexcp="No cab found with id: ";
+	String tripexcp="No trip booking found with id: ";
 
 	@Override
 	public TripBooking insertTripBooking(TripBooking tripBooking, Long cabId, Long customerId)
@@ -86,7 +87,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 				throw new CabNotFoundException(cabexcp+cabId);
 			}
 		} else {
-			throw new TripBookingNotFoundException("No trip booking found with id: "+tripBooking.getTripBookingId());
+			throw new TripBookingNotFoundException(tripexcp+tripBooking.getTripBookingId());
 		}
 	}
 
@@ -97,7 +98,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 			tripBookingRepository.deleteById(tripBookingId);
 			return null;
 		} else {
-			throw new TripBookingNotFoundException("No trip booking found with id: "+tripBookingId);
+			throw new TripBookingNotFoundException(tripexcp+tripBookingId);
 		}
 	}
 
@@ -125,22 +126,17 @@ public class TripBookingServiceImpl implements TripBookingService {
 		return trip2;
 	}
 	
-//	@Override
-//	public TripBooking calculateTripBill(Long customerId, Long tripBookingId) {
-//		Optional<Customer> customerOpt = customerRepository.findById(customerId);
-//		if (customerOpt.isPresent()) {
-//			Optional<List<TripBooking>> trpbkOpt = tripBookingRepository.findTripByCustomerCustomerId(customerId);
-//			if(trpbkOpt.)
-//			if (trpbkOpt.isPresent()) {
-//			for (TripBooking tripop : trip1) {
-//				if (tripop.getCustomer().getCustomerId().equals(customerId)) {
-//					tripop.setBill((tripop.getDistanceInKm()) * (tripop.getCab().getPerKmRate()));
-//					trip2.add(tripop);
-//				}
-//		}
-//		
-//		}
-//		return trip2;
-//	}
+	@Override
+	public TripBooking calculateTripBill(Long tripBookingId)throws TripBookingNotFoundException {
+		
+			Optional<TripBooking> trpbkOpt = tripBookingRepository.findById(tripBookingId);
+			if (trpbkOpt.isPresent()) {
+					trpbkOpt.get().setBill((trpbkOpt.get().getDistanceInKm()) * (trpbkOpt.get().getCab().getPerKmRate()));
+					return trpbkOpt.get();	
+			}
+			else {
+				throw new TripBookingNotFoundException(tripexcp+tripBookingId);
+			}
+	}
 
 }

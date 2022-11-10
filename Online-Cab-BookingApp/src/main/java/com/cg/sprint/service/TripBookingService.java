@@ -20,5 +20,5 @@ public interface TripBookingService {
 
 	List<TripBooking> calculateBill(Long customerId);
 
-//	TripBooking calculateTripBill(Long customerId, Long tripBookingId);
+	TripBooking calculateTripBill(Long tripBookingId);
 }

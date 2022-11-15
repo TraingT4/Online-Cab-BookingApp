@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import com.cg.sprint.service.TripBookingService;
 
 @RestController
 @RequestMapping("/api/admins")
+@CrossOrigin("*")
 public class AdminController {
 
 	@Autowired
@@ -59,6 +61,11 @@ public class AdminController {
 		return new ResponseEntity<>("Successfully Deleted", HttpStatus.NO_CONTENT);
 	}
 
+	@GetMapping("/")
+	public ResponseEntity<List<Admin>> getallAdmins() {
+		List<Admin> admins = adminService.getAllAdmins();
+		return new ResponseEntity<>(admins, HttpStatus.OK);
+	}
 	// get all trips method
 	@GetMapping("/trips")
 	public ResponseEntity<List<TripBooking>> getallTrips() {

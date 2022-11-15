@@ -19,4 +19,5 @@ public interface AdminService {
 	List<TripBooking> getTripsDatewise(LocalDateTime date);
 	List<TripBooking> getAllTripsForDays(Long customerId, LocalDateTime fromDate,LocalDateTime toDate);
 	String validateAdmin(Long adminId, String password);
+	List<Admin> getAllAdmins();
 }

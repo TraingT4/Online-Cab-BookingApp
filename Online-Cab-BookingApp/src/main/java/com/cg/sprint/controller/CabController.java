@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.sprint.dto.CabDto;
 import com.cg.sprint.dto.Convertor;
 import com.cg.sprint.entity.Cab;
+import com.cg.sprint.entity.Customer;
 import com.cg.sprint.exception.CabNotFoundException;
 import com.cg.sprint.exception.DriverNotFoundException;
 import com.cg.sprint.exception.InvalidCarTypeException;
@@ -27,6 +29,7 @@ import com.cg.sprint.service.CabService;
 
 @RestController
 @RequestMapping("api/cabs")
+@CrossOrigin("*")
 public class CabController {
 
 	@Autowired
@@ -54,6 +57,18 @@ public class CabController {
 	public ResponseEntity<String> deleteCab(@PathVariable("cabId") Long cabId) throws CabNotFoundException{
 		cabService.deleteCab(cabId);
 		return new ResponseEntity<>("Successfully Deleted", HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("/id/{cabId}")
+	public ResponseEntity<Cab> getCabId(@PathVariable("cabId") Long cabId) throws CabNotFoundException {
+		 Cab cab = cabService.getCabId(cabId);
+		return new ResponseEntity<>(cab, HttpStatus.OK);
+	}
+	
+	@GetMapping("/")
+	public ResponseEntity<List<Cab>> getallCabs() throws CabNotFoundException {
+		 List<Cab> cabs = cabService.viewCabs();
+		return new ResponseEntity<>(cabs, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{cabType}")

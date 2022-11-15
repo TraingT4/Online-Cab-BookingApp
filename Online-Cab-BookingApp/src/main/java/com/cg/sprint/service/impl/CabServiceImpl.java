@@ -100,9 +100,13 @@ public class CabServiceImpl implements CabService {
 	//deleting the cab
 	@Override
 	public void deleteCab(Long cabId) throws CabNotFoundException {
-		try {
-			cabRepository.deleteById(cabId);//deleting the cab
-		} catch (Exception ex) {
+		Optional<Cab> cab=cabRepository.findById(cabId);
+		if(cab.isPresent())
+		{
+			cabRepository.deleteById(cabId);
+		}
+		else
+		{
 			throw new CabNotFoundException(cabexcp);
 		}
 	}
@@ -140,5 +144,22 @@ public class CabServiceImpl implements CabService {
 			return count;
 		}
 	}
+
+	@Override
+	public List<Cab> viewCabs() throws CabNotFoundException {
+		List<Cab> cabs=cabRepository.findAll();
+		if(cabs.isEmpty())
+		{
+			throw new CabNotFoundException("No Cabs Exits");
+		}
+		return cabs;
+	}
+
+	@Override
+	public Cab getCabId(Long cabId) throws CabNotFoundException {
+		Optional<Cab> cab=cabRepository.findById(cabId);
+		return cab.get();
+	}
+
 
 }

@@ -114,39 +114,39 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	// get trips using date
-	@Override
-	public List<TripBooking> getTripsDatewise(LocalDateTime date) {
-		List<TripBooking> tripDate = tripBookingRepository.findAll().stream()
-				.filter(t -> t.getFromDateTime().getDayOfYear() == date.getDayOfYear()).toList();
-		if (tripDate.isEmpty()) {
-			String[] str = date.toString().split("T");
-			throw new TripBookingNotFoundException("No trips booked for date: " + str[0]);
-		} else {
-			return tripDate;
-		}
-	}
-
-	// get trips using customer id and between date
-	@Override
-	public List<TripBooking> getAllTripsForDays(Long customerId, LocalDateTime fromDate, LocalDateTime toDate) {
-		Optional<Customer> custOpt = customerRepository.findById(customerId);
-		if (custOpt.isPresent()) {
+		@Override
+		public List<TripBooking> getTripsDatewise(LocalDateTime date) {
 			List<TripBooking> tripDate = tripBookingRepository.findAll().stream()
-					.filter(t -> t.getCustomer().getCustomerId().equals(customerId)
-							&& (t.getFromDateTime().isAfter(fromDate) && t.getFromDateTime().isBefore(toDate)))
-					.toList();
+					.filter(t -> t.getFromDateTime().getDayOfYear() == date.getDayOfYear()).toList();
 			if (tripDate.isEmpty()) {
-				String[] str1 = fromDate.toString().split("T");
-				String[] str2 = toDate.toString().split("T");
-				throw new TripBookingNotFoundException(
-						"No trips booked from " + str1[0] + " to " + str2[0] + " by customer " + customerId);
+				String[] str = date.toString().split("T");
+				throw new TripBookingNotFoundException("No trips booked for date: " + str[0]);
 			} else {
 				return tripDate;
 			}
-		} else {
-			throw new CustomerNotFoundException("No customer found with id: " + customerId);
 		}
-	}
+
+		// get trips using customer id and between date
+		@Override
+		public List<TripBooking> getAllTripsForDays(Long customerId, LocalDateTime fromDate, LocalDateTime toDate) {
+			Optional<Customer> custOpt = customerRepository.findById(customerId);
+			if (custOpt.isPresent()) {
+				List<TripBooking> tripDate = tripBookingRepository.findAll().stream()
+						.filter(t -> t.getCustomer().getCustomerId().equals(customerId)
+								&& (t.getFromDateTime().isAfter(fromDate) && t.getFromDateTime().isBefore(toDate)))
+						.toList();
+				if (tripDate.isEmpty()) {
+					String[] str1 = fromDate.toString().split("T");
+					String[] str2 = toDate.toString().split("T");
+					throw new TripBookingNotFoundException(
+							"No trips booked from " + str1[0] + " to " + str2[0] + " by customer " + customerId);
+				} else {
+					return tripDate;
+				}
+			} else {
+				throw new CustomerNotFoundException("No customer found with id: " + customerId);
+			}
+		}
 
 	@Override
 	public String validateAdmin(Long adminid, String password) {
@@ -159,6 +159,12 @@ public class AdminServiceImpl implements AdminService {
 			throw new AdminNotFoundException("Either admin id or password is incorrect");
 		}
 
+	}
+
+	@Override
+	public List<Admin> getAllAdmins() {
+		
+		return adminRepository.findAll();
 	}
 
 }

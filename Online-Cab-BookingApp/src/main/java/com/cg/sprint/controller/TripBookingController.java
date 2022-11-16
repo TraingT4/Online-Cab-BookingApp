@@ -65,15 +65,26 @@ public class TripBookingController {
 		return new ResponseEntity<>("Successfully Deleted", HttpStatus.NO_CONTENT);
 	}
 
-	@GetMapping("/{customer_id}")
+	@GetMapping("/all/{customer_id}")
 	public ResponseEntity<List<TripBooking>> getTripBookingCustomerwise(@PathVariable("customer_id") Long customerId) {
 		List<TripBooking> trips = tripBookingService.viewAllTripCustomer(customerId);
+		return new ResponseEntity<>(trips, HttpStatus.OK);
+	}
+	@GetMapping("/")
+	public ResponseEntity<List<TripBooking>> getTripBooking() {
+		List<TripBooking> trips = tripBookingService.viewAllTrip();
 		return new ResponseEntity<>(trips, HttpStatus.OK);
 	}
 
 	@GetMapping("/bill/{customer_id}")
 	public ResponseEntity<List<TripBooking>> getTripBillCustomerwise(@PathVariable("customer_id") Long customerId) {
 		List<TripBooking> trips = tripBookingService.calculateBill(customerId);
+		return new ResponseEntity<>(trips, HttpStatus.OK);
+	}
+	
+	@GetMapping("/findone/{tripbooking_id}")
+	public ResponseEntity <TripBooking> getTripById(@PathVariable("tripbooking_id") Long tripbooking_id) {
+		TripBooking trips = tripBookingService.findTrips(tripbooking_id);
 		return new ResponseEntity<>(trips, HttpStatus.OK);
 	}
 	

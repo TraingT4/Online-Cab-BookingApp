@@ -138,5 +138,30 @@ public class TripBookingServiceImpl implements TripBookingService {
 				throw new TripBookingNotFoundException(tripexcp+tripBookingId);
 			}
 	}
+public List<TripBooking> viewAllTrip() throws TripBookingNotFoundException {
+		// TODO Auto-generated method stub
+		
+		List<TripBooking> trip1 = tripBookingRepository.findAll();
+		if ((!trip1.isEmpty())) {
+		return trip1;
+		}else {
+			throw new TripBookingNotFoundException("No Trip is Booked");
+		}
+		
+	}
 
+@Override
+public TripBooking findTrips(Long tripbooking_id) throws TripBookingNotFoundException {
+	
+	Optional<TripBooking> trpbkOpt = tripBookingRepository.findById(tripbooking_id);
+	if (trpbkOpt.isPresent()) {
+		return trpbkOpt.get();
+	}
+	else {
+		throw new TripBookingNotFoundException("Wrong Booking Id or You have No Booking");
+	}
+	
+
+
+}
 }

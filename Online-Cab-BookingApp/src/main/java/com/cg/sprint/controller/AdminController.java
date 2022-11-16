@@ -72,6 +72,11 @@ public class AdminController {
 		List<TripBooking> trips = adminService.getAllTrips();
 		return new ResponseEntity<>(trips, HttpStatus.OK);
 	}
+	@GetMapping("/{adminId}")
+	public ResponseEntity<Admin> getAdminById(@PathVariable("adminId") Long adminId) {
+		Admin admin = adminService.getAdminById(adminId);
+		return new ResponseEntity<>(admin, HttpStatus.OK);
+	}
 
 	// get all trips method
 	@GetMapping("/trips/customers/{customer_id}")

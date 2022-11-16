@@ -167,4 +167,19 @@ public class AdminServiceImpl implements AdminService {
 		return adminRepository.findAll();
 	}
 
+	@Override
+	public Admin getAdminById(Long adminId) throws AdminNotFoundException{
+		
+		Admin admin=adminRepository.findByAdminId(adminId);
+		if(admin!=null)
+		{
+			return admin;
+		}
+		else
+		{
+			throw new AdminNotFoundException("No admin found with id: " + adminId);
+		}
+		
+	}
+
 }

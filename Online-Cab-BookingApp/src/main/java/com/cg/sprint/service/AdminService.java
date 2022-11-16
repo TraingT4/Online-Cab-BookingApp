@@ -20,4 +20,5 @@ public interface AdminService {
 	List<TripBooking> getAllTripsForDays(Long customerId, LocalDateTime fromDate,LocalDateTime toDate);
 	String validateAdmin(Long adminId, String password);
 	List<Admin> getAllAdmins();
+	Admin getAdminById(Long adminId);
 }
